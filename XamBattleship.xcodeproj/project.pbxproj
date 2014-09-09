@@ -31,6 +31,7 @@
 		CE9DDA0819BE4CA2008D244A /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0019BE4CA2008D244A /* SocketIOPacket.m */; };
 		CE9DDA0919BE4CA2008D244A /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0319BE4CA2008D244A /* SocketIOTransportWebsocket.m */; };
 		CE9DDA0A19BE4CA2008D244A /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0519BE4CA2008D244A /* SocketIOTransportXHR.m */; };
+		CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		CE9DDA0319BE4CA2008D244A /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportWebsocket.m; path = Socket.IO/SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
 		CE9DDA0419BE4CA2008D244A /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransportXHR.h; path = Socket.IO/SocketIOTransportXHR.h; sourceTree = "<group>"; };
 		CE9DDA0519BE4CA2008D244A /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportXHR.m; path = Socket.IO/SocketIOTransportXHR.m; sourceTree = "<group>"; };
+		CE9DDA0B19BF1B01008D244A /* SEGamingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEGamingCard.h; path = API/SEGamingCard.h; sourceTree = "<group>"; };
+		CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEGamingCard.m; path = API/SEGamingCard.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,6 +208,8 @@
 			children = (
 				CE178CD219BB79C400379690 /* SEFigureKit.h */,
 				CE178CD319BB79C400379690 /* SEFigureKit.m */,
+				CE9DDA0B19BF1B01008D244A /* SEGamingCard.h */,
+				CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
 				CE9DDA0719BE4CA2008D244A /* SocketIOJSONSerialization.m in Sources */,
 				CE9DDA0919BE4CA2008D244A /* SocketIOTransportWebsocket.m in Sources */,
+				CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */,
 				CE9DDA0819BE4CA2008D244A /* SocketIOPacket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

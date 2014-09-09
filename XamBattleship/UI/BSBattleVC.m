@@ -9,6 +9,7 @@
 #import "BSBattleVC.h"
 #import "UIColor+iOS7Colors.h"
 #import "SEFigureKit.h"
+#import "SEGamingCard.h"
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
@@ -26,7 +27,6 @@ static NSUInteger const gameCardWidth = 74;
 static NSUInteger const gameCardHeight = 86;
 static NSUInteger const gameCardHorizontalAsset = 5;
 static NSUInteger const gameCardVerticalAsset = 4;
-static NSUInteger const gameCardCornerRadius = 7;
 static NSUInteger const gameCardBlockHeight = 15;
 static NSUInteger const gameCardBlockWidth = 15;
 static NSUInteger const gameCardBlockCornerRadius = 3;
@@ -43,8 +43,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 
 @interface BSPrepareBattleVC ()
 
-@property (nonatomic, copy) NSMutableArray /* of SEFigures */ *figures;
-@property (nonatomic, copy) NSMutableArray /* of UIViews */ *cards;
+@property (nonatomic, copy) NSMutableArray /* of SEGamingCards */ *cards;
 
 @end
 
@@ -101,7 +100,6 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _figures = [@[] mutableCopy];
         _cards = [@[] mutableCopy];
     }
     return self;
@@ -123,9 +121,8 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     // Create cards with figures.
     for (NSNumber *tubesNumber in shipTubes) {
         SEFigure *newFigure = [[SEFigureKit sharedKit]figureWithNumberOfBlocks:tubesNumber color:[UIColor randomColor]];
-        [_figures addObject:newFigure];
         CGRect cardFrame = [BSPrepareBattleVC cardFrame];
-        UIView *newCard = [[UIView alloc]initWithFrame:(CGRect) {
+        cardFrame = (CGRect)(CGRect) {
             cardFrame.origin.x + gameCardHorizontalAsset +
                 (([_cards count]<4)?
                 (cardFrame.size.width + gameCardHorizontalAsset) * [_cards count]
@@ -133,16 +130,16 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
             cardFrame.origin.y + gameCardVerticalAsset
             + (([_cards count]<4)? 0 : (gameCardVerticalAsset+gameCardHeight)),
             cardFrame.size
-        }];
-        newCard.backgroundColor = [UIColor rhythmusBackgroundColor];
-        newCard.layer.cornerRadius = gameCardCornerRadius;
-        newCard.layer.borderWidth = 0.7;
-        newCard.layer.borderColor = [UIColor silverColor].CGColor;
-        [newFigure centerWithRect:newCard.frame];
-        [newCard addSubview:newFigure.view];
+        };
+        SEGamingCard *newCard = [SEGamingCard cardWithFigure:newFigure frame:cardFrame];
         [_cards addObject:newCard];
-        [self.view addSubview:newCard];
+        [self.view addSubview:newCard.view];
     }
+}
+
+- (void)didTouchCard:(UIButton *)cardButton
+{
+    NSLog(@"Did Touch the card: %@", cardButton);
 }
 
 @end

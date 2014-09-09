@@ -8,9 +8,9 @@
 
 #import "SEFigureKit.h"
 
-typedef NS_ENUM(NSUInteger, BucketType) {
-    bucketTypeEmpty = 0,
-    bucketTypeBlock = 1
+typedef NS_ENUM(NSUInteger, BlockType) {
+    blockTypeEmpty = 0,
+    blockTypeSolid = 1
 };
 
 
@@ -47,12 +47,12 @@ typedef NS_ENUM(NSUInteger, BucketType) {
 - (UIView *)view
 {
     if (![self.viewsArray count]) {
-        [self redrawView];
+        [self redrawViewWithTemplateBlock:self.kit.templateBlock];
     }
     return _view;
 }
 
-- (void)redrawView
+- (void)redrawViewWithTemplateBlock:(UIView *)templateBlock
 {
     if (self.viewsArray) {
         for (UIView *block in self.viewsArray) {
@@ -62,36 +62,55 @@ typedef NS_ENUM(NSUInteger, BucketType) {
     }
     // Let's create new views for figure
     NSUInteger squareFactor = (int)sqrt((double)[self.modelArray count]);
-    _view.frame = (CGRect) {
-        0,
-        0,
-        self.kit.templateBlock.frame.size.width * squareFactor,
-        self.kit.templateBlock.frame.size.height * squareFactor
-    };
+//    _view.frame = (CGRect) {
+//        0,
+//        0,
+//        templateBlock.frame.size.width * squareFactor,
+//        templateBlock.frame.size.height * squareFactor
+//    };
+    CGRect newViewFrame = (CGRect){0,0,0,0};
     for (NSUInteger y = 0; y < squareFactor; y++) {
         for (NSUInteger x = 0; x < squareFactor; x++) {
-            if ([self.modelArray[y*squareFactor + x] intValue] == bucketTypeBlock) {
+            if ([self.modelArray[y*squareFactor + x] intValue] == blockTypeSolid) {
                 CGRect newFrame = (CGRect) {
-                    x * self.kit.templateBlock.frame.size.width,
-                    y * self.kit.templateBlock.frame.size.height,
-                    self.kit.templateBlock.frame.size.width,
-                    self.kit.templateBlock.frame.size.height
+                    x * templateBlock.frame.size.width,
+                    y * templateBlock.frame.size.height,
+                    templateBlock.frame.size.width,
+                    templateBlock.frame.size.height
                 };
+                if (!newViewFrame.size.width) {
+                    newViewFrame = newFrame;
+                }
+                else {
+                    newViewFrame = CGRectUnion(newViewFrame, newFrame);
+                }
                 UIView *newBlock = [[UIView alloc]initWithFrame:newFrame];
                 if (self.figureColor) {
                     newBlock.backgroundColor = self.figureColor;
                 }
                 else {
-                    newBlock.backgroundColor = self.kit.templateBlock.backgroundColor;
+                    newBlock.backgroundColor = templateBlock.backgroundColor;
                 }
-                newBlock.layer.cornerRadius = self.kit.templateBlock.layer.cornerRadius;
-                newBlock.layer.borderWidth = self.kit.templateBlock.layer.borderWidth;
-                newBlock.layer.borderColor = self.kit.templateBlock.layer.borderColor;
+                newBlock.layer.cornerRadius = templateBlock.layer.cornerRadius;
+                newBlock.layer.borderWidth = templateBlock.layer.borderWidth;
+                newBlock.layer.borderColor = templateBlock.layer.borderColor;
                 [self.viewsArray addObject:newBlock];
                 [_view addSubview:newBlock];
             }
         }
     }
+    for (UIView *block in self.viewsArray) {
+        block.frame = (CGRect) {
+            block.frame.origin.x - newViewFrame.origin.x,
+            block.frame.origin.y - newViewFrame.origin.y,
+            block.frame.size
+        };
+    }
+    _view.frame = (CGRect){
+        0,
+        0,
+        newViewFrame.size
+    };
 }
 
 - (void)rotate
@@ -109,6 +128,11 @@ typedef NS_ENUM(NSUInteger, BucketType) {
         _view.frame.size
     };
     _view.frame = newFrame;
+}
+
+- (void)scaleToTemplateBlock:(UIView *)templateBlock
+{
+    [self redrawViewWithTemplateBlock:templateBlock];
 }
 
 @end

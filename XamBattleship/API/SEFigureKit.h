@@ -16,6 +16,7 @@
 - (NSArray *)modelArray;
 - (void)rotate;
 - (void)centerWithRect:(CGRect)rect;
+- (void)scaleToTemplateBlock:(UIView *)templateBlock;
 
 @end
 
