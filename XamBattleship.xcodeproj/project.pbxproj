@@ -26,6 +26,11 @@
 		CE178CCD19B882A800379690 /* BSPrepareButtleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */; };
 		CE178CD019B8DC0500379690 /* UIColor+iOS7Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CCF19B8DC0500379690 /* UIColor+iOS7Colors.m */; };
 		CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CD319BB79C400379690 /* SEFigureKit.m */; };
+		CE9DDA0619BE4CA2008D244A /* SocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DD9FC19BE4CA2008D244A /* SocketIO.m */; };
+		CE9DDA0719BE4CA2008D244A /* SocketIOJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DD9FE19BE4CA2008D244A /* SocketIOJSONSerialization.m */; };
+		CE9DDA0819BE4CA2008D244A /* SocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0019BE4CA2008D244A /* SocketIOPacket.m */; };
+		CE9DDA0919BE4CA2008D244A /* SocketIOTransportWebsocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0319BE4CA2008D244A /* SocketIOTransportWebsocket.m */; };
+		CE9DDA0A19BE4CA2008D244A /* SocketIOTransportXHR.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0519BE4CA2008D244A /* SocketIOTransportXHR.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,17 @@
 		CE178CCF19B8DC0500379690 /* UIColor+iOS7Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+iOS7Colors.m"; sourceTree = "<group>"; };
 		CE178CD219BB79C400379690 /* SEFigureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEFigureKit.h; path = API/SEFigureKit.h; sourceTree = "<group>"; };
 		CE178CD319BB79C400379690 /* SEFigureKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEFigureKit.m; path = API/SEFigureKit.m; sourceTree = "<group>"; };
+		CE9DD9FB19BE4CA2008D244A /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIO.h; path = Socket.IO/SocketIO.h; sourceTree = "<group>"; };
+		CE9DD9FC19BE4CA2008D244A /* SocketIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIO.m; path = Socket.IO/SocketIO.m; sourceTree = "<group>"; };
+		CE9DD9FD19BE4CA2008D244A /* SocketIOJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOJSONSerialization.h; path = Socket.IO/SocketIOJSONSerialization.h; sourceTree = "<group>"; };
+		CE9DD9FE19BE4CA2008D244A /* SocketIOJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOJSONSerialization.m; path = Socket.IO/SocketIOJSONSerialization.m; sourceTree = "<group>"; };
+		CE9DD9FF19BE4CA2008D244A /* SocketIOPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOPacket.h; path = Socket.IO/SocketIOPacket.h; sourceTree = "<group>"; };
+		CE9DDA0019BE4CA2008D244A /* SocketIOPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOPacket.m; path = Socket.IO/SocketIOPacket.m; sourceTree = "<group>"; };
+		CE9DDA0119BE4CA2008D244A /* SocketIOTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransport.h; path = Socket.IO/SocketIOTransport.h; sourceTree = "<group>"; };
+		CE9DDA0219BE4CA2008D244A /* SocketIOTransportWebsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransportWebsocket.h; path = Socket.IO/SocketIOTransportWebsocket.h; sourceTree = "<group>"; };
+		CE9DDA0319BE4CA2008D244A /* SocketIOTransportWebsocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportWebsocket.m; path = Socket.IO/SocketIOTransportWebsocket.m; sourceTree = "<group>"; };
+		CE9DDA0419BE4CA2008D244A /* SocketIOTransportXHR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTransportXHR.h; path = Socket.IO/SocketIOTransportXHR.h; sourceTree = "<group>"; };
+		CE9DDA0519BE4CA2008D244A /* SocketIOTransportXHR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketIOTransportXHR.m; path = Socket.IO/SocketIOTransportXHR.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +145,7 @@
 		CE178C9A19B81EC500379690 /* XamBattleship */ = {
 			isa = PBXGroup;
 			children = (
+				CE9DD9FA19BE4C8C008D244A /* Socket.io */,
 				CE178CD119BB799300379690 /* API */,
 				CE178CC819B82FEA00379690 /* UI */,
 				CE178CA319B81EC500379690 /* BSAppDelegate.h */,
@@ -190,6 +207,24 @@
 				CE178CD319BB79C400379690 /* SEFigureKit.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		CE9DD9FA19BE4C8C008D244A /* Socket.io */ = {
+			isa = PBXGroup;
+			children = (
+				CE9DD9FB19BE4CA2008D244A /* SocketIO.h */,
+				CE9DD9FC19BE4CA2008D244A /* SocketIO.m */,
+				CE9DD9FD19BE4CA2008D244A /* SocketIOJSONSerialization.h */,
+				CE9DD9FE19BE4CA2008D244A /* SocketIOJSONSerialization.m */,
+				CE9DD9FF19BE4CA2008D244A /* SocketIOPacket.h */,
+				CE9DDA0019BE4CA2008D244A /* SocketIOPacket.m */,
+				CE9DDA0119BE4CA2008D244A /* SocketIOTransport.h */,
+				CE9DDA0219BE4CA2008D244A /* SocketIOTransportWebsocket.h */,
+				CE9DDA0319BE4CA2008D244A /* SocketIOTransportWebsocket.m */,
+				CE9DDA0419BE4CA2008D244A /* SocketIOTransportXHR.h */,
+				CE9DDA0519BE4CA2008D244A /* SocketIOTransportXHR.m */,
+			);
+			name = Socket.io;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,12 +360,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9DDA0A19BE4CA2008D244A /* SocketIOTransportXHR.m in Sources */,
 				CE178CC619B82FD000379690 /* BSMenuVC.m in Sources */,
 				CE178CA119B81EC500379690 /* main.m in Sources */,
 				CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */,
 				CE178CA519B81EC500379690 /* BSAppDelegate.m in Sources */,
+				CE9DDA0619BE4CA2008D244A /* SocketIO.m in Sources */,
 				CE178CD019B8DC0500379690 /* UIColor+iOS7Colors.m in Sources */,
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
+				CE9DDA0719BE4CA2008D244A /* SocketIOJSONSerialization.m in Sources */,
+				CE9DDA0919BE4CA2008D244A /* SocketIOTransportWebsocket.m in Sources */,
+				CE9DDA0819BE4CA2008D244A /* SocketIOPacket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,14 +15,17 @@
 - (instancetype)initWithArray:(NSArray *)array;
 - (NSArray *)modelArray;
 - (void)rotate;
+- (void)centerWithRect:(CGRect)rect;
 
 @end
 
 
 @interface SEFigureKit : NSObject
 
-+ (SEFigureKit *)sharedKit;
+@property (nonatomic, strong) UIView *templateBlock;
 
-- (SEFigure *)figureWithNumberOfBuckets:(NSNumber /* with UInt < 5 */*)numberOfBuckets;
++ (SEFigureKit *)sharedKit;
+- (SEFigure *)figureWithNumberOfBlocks:(NSNumber /* with UInt < 5 */*)numberOfBlocks
+    color:(UIColor *)figureColor;
 
 @end
