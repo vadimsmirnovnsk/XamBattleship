@@ -44,7 +44,6 @@ static NSUInteger const gameCardCornerRadius = 7;
 
 - (void)didTouchCard:(UIButton *)sender
 {
-    self.figure.canDrop = NO;
     UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 31, 31}];
     templateBlock.backgroundColor = [UIColor magentaColor];
     templateBlock.layer.cornerRadius = 8;

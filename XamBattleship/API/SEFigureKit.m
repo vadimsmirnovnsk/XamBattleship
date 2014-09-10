@@ -14,10 +14,14 @@ typedef NS_ENUM(NSUInteger, BlockType) {
 };
 
 
+@implementation SEFigureBlock
+@end
+
+
 @interface SEFigure ()
 
 @property (nonatomic, copy) NSMutableArray /* of NSNumbers with Int */ *modelArray;
-@property (nonatomic, copy) NSMutableArray /* of UIViews */ *viewsArray;
+@property (nonatomic, copy) NSMutableArray /* of SEFigureBlocks */ *viewsArray;
 @property (nonatomic, weak) SEFigureKit *kit;
 @property (nonatomic, strong) UIColor *figureColor;
 
@@ -57,10 +61,21 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     return [_viewsArray copy];
 }
 
+- (BOOL)canDrop
+{
+    BOOL canDrop = YES;
+    for (SEFigureBlock *block in self.viewsArray) {
+        if (!block.canDrop) {
+            canDrop = NO;
+        }
+    }
+    return canDrop;
+}
+
 - (void)redrawViewWithTemplateBlock:(UIView *)templateBlock
 {
     if (self.viewsArray) {
-        for (UIView *block in self.viewsArray) {
+        for (SEFigureBlock *block in self.viewsArray) {
             [block removeFromSuperview];
         }
         [self.viewsArray removeAllObjects];
@@ -83,12 +98,14 @@ typedef NS_ENUM(NSUInteger, BlockType) {
                 else {
                     newViewFrame = CGRectUnion(newViewFrame, newFrame);
                 }
-                UIView *newBlock = [[UIView alloc]initWithFrame:newFrame];
+                SEFigureBlock *newBlock = [[SEFigureBlock alloc]initWithFrame:newFrame];
                 if (self.figureColor) {
                     newBlock.backgroundColor = self.figureColor;
+                    newBlock.surfaceColor = self.figureColor;
                 }
                 else {
                     newBlock.backgroundColor = templateBlock.backgroundColor;
+                    newBlock.surfaceColor = templateBlock.backgroundColor;
                 }
                 newBlock.layer.cornerRadius = templateBlock.layer.cornerRadius;
                 newBlock.layer.borderWidth = templateBlock.layer.borderWidth;
@@ -114,8 +131,17 @@ typedef NS_ENUM(NSUInteger, BlockType) {
 
 - (void)rotate:(NSUInteger)times
 {
-#warning TODO: Make universal rotate for any figure.
-    NSLog(@"Rotate figure");
+    NSMutableArray *newModelArray = [self.modelArray mutableCopy];
+    NSUInteger squareFactor = (int)sqrt((double)[self.modelArray count]);
+    for (NSUInteger time = 0; time < times; time++) {
+        for (NSUInteger i = 0 ; i < squareFactor; i++) {
+            for (NSUInteger j = 0; j < squareFactor; j++) {
+                newModelArray[i*squareFactor + j] =
+                    self.modelArray[(j+1) * squareFactor - 1 - i];
+            }
+        }
+        self.modelArray = newModelArray;
+    }
 }
 
 - (void)centerWithRect:(CGRect)rect

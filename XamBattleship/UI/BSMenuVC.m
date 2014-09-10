@@ -11,20 +11,16 @@
 #import "BSBattleVC.h"
 #import "SEFigureKit.h"
 #import "UIColor+iOS7Colors.h"
-#import "SocketIO.h"
-#import "SocketIOPacket.h"
 
 
 #pragma mark - BSMenuVC Extension
 
-@interface BSMenuVC () <SRWebSocketDelegate, UITextFieldDelegate, BSBattleVCDelegate,
-    SocketIODelegate>
+@interface BSMenuVC () <SRWebSocketDelegate, UITextFieldDelegate, BSBattleVCDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 @property (nonatomic, strong) SRWebSocket *webSocket;
 @property (nonatomic, strong) BSBattleVC *prepareBattle;
 @property (nonatomic, strong) SEFigure *figure;
-@property (nonatomic, strong) SocketIO *socketIO;
 
 @end
 
@@ -49,19 +45,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.webSocket = [[SRWebSocket alloc]initWithURL:
-        [NSURL URLWithString:@"ws://193.111.62.58:8008"]];
-            //@"ws://echo.websocket.org"@"ws://192.111.62.58"
+        [NSURL URLWithString:@"ws://178.62.133.173:8008"]];
     self.webSocket.delegate = self;
     NSLog(@"Opening websocket connection...");
     [self.webSocket open];
-    
-    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:@"ws://echo.websocket.org" onPort:8080];
 }
 
 - (IBAction)sendMessage:(id)sender
 {
-    [self.webSocket send:self.textField.text];
+    NSDictionary *jsonDict = @{
+             @"act" : @"signin",
+        @"username" : self.textField.text};
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:nil];
+    NSString *jsonString = [[NSString alloc]initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
+    [self.webSocket send:jsonString];
 }
 
 - (IBAction)prepareGame:(id)sender
@@ -138,43 +135,5 @@
     NSLog(@"Socket %@ is opened",webSocket);
 }
 
-#pragma mark IOSocketDelegate methods
-
-// message delegate
-- (void) socketIO:(SocketIO *)socket didReceiveMessage:(SocketIOPacket *)packet
-{
-    NSLog(@"didReceiveMessage >>> data: %@", packet.data);
-}
-
-// event delegate
-- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
-{
-    NSLog(@"didReceiveEvent >>> data: %@", packet.data);
-}
-
-- (void) socketIODidConnect:(SocketIO *)socket
-{
-    NSLog(@"SocketIO didConnect: %@",socket);
-}
-
-- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
-{
-    NSLog(@"SocketIO disconnectedWithError: %@", error);
-}
-
-- (void) socketIO:(SocketIO *)socket didReceiveJSON:(SocketIOPacket *)packet
-{
-    NSLog(@"SocketIO didReceiveJSON: %@", packet.dataAsJSON);
-}
-
-- (void) socketIO:(SocketIO *)socket didSendMessage:(SocketIOPacket *)packet
-{
-    NSLog(@"SocketIO didSendMessage");
-}
-
-- (void) socketIO:(SocketIO *)socket onError:(NSError *)error
-{
-    NSLog(@"SocketIO onError: %@",error);
-}
 
 @end

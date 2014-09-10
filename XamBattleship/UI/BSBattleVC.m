@@ -125,6 +125,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     // Create cards with figures.
     for (NSNumber *tubesNumber in shipTubes) {
         SEFigure *newFigure = [[SEFigureKit sharedKit]figureWithNumberOfBlocks:tubesNumber color:[UIColor randomColor]];
+        [newFigure rotate:arc4random()%4];
         CGRect cardFrame = [BSPrepareBattleVC cardFrame];
         cardFrame = (CGRect)(CGRect) {
             cardFrame.origin.x + gameCardHorizontalAsset +
@@ -259,15 +260,25 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 {
     for (SEGameCell *cell in self.gameAreaCells) {
         if (cell.state == gameStateEmpty) {
-            for (UIView *block in figure.views) {
+            for (SEFigureBlock *block in figure.views) {
                 if (CGRectContainsPoint(cell.button.frame,
                     [block.superview convertPoint:block.center toView:nil])) {
+                    block.backgroundColor = block.surfaceColor;
                     cell.button.backgroundColor = block.backgroundColor;
+                    block.canDrop = YES;
                     break;
                 }
                 else {
                     cell.button.backgroundColor = [UIColor clearColor];
                 }
+            }
+        }
+        else if (cell.state == gameStateBusy)
+        for (SEFigureBlock *block in figure.views) {
+            if (CGRectContainsPoint(cell.button.frame,
+                [block.superview convertPoint:block.center toView:nil])) {
+                block.backgroundColor = [UIColor redColor];
+                block.canDrop = NO;
             }
         }
     }
@@ -277,13 +288,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 
 - (void) figureDidMove:(SEFigure *)figure
 {
-    NSLog(@"Figure moved!");
-    CGRect figureAbsolutFrame = [figure.view.superview
-        convertRect:figure.view.frame toView:nil];
-    if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 , 320,
-    gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) ) {
-        [self snapFigureToGrid:figure];
-    }
+    [self snapFigureToGrid:figure];
 }
 
 - (BOOL) figureWillDrope:(SEFigure *)figure
@@ -291,20 +296,24 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     CGRect figureAbsolutFrame = [figure.view.superview
         convertRect:figure.view.frame toView:nil];
     if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 , 320,
-    gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) ) {
-    for (SEGameCell *cell in self.gameAreaCells) {
-        for (UIView *block in figure.views) {
-            if (CGRectContainsPoint(cell.button.frame,
-                [block.superview convertPoint:block.center toView:nil])) {
-                cell.button.backgroundColor = block.backgroundColor;
-                cell.state = gameStateBusy;
-                break;
+    gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) && ([figure canDrop])) {
+        for (SEGameCell *cell in self.gameAreaCells) {
+            for (SEFigureBlock *block in figure.views) {
+                if (CGRectContainsPoint(cell.button.frame,
+                    [block.superview convertPoint:block.center toView:nil])) {
+                    cell.button.backgroundColor = block.backgroundColor;
+                    cell.state = gameStateBusy;
+                    break;
+                }
             }
         }
-    }
         return YES;
     }
-    else return NO;
+    else {
+        figure.view.frame = (CGRect){-1000, -1000, figure.view.frame.size};
+        [self snapFigureToGrid:figure];
+        return NO;
+    }
 }
 
 

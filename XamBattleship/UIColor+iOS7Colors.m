@@ -10,7 +10,7 @@
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         colors = [NSArray arrayWithObjects:
-        @"silverColor",
+//        @"silverColor",
         @"manateeColor",
         @"radicalRedColor",
         @"redOrangeColor",

@@ -18,11 +18,19 @@
 @end
 
 
+@interface SEFigureBlock : UIView
+
+@property (nonatomic, strong) UIColor *surfaceColor;
+@property (nonatomic, readwrite) BOOL canDrop;
+
+@end
+
+
 @interface SEFigure : NSObject
 
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, strong, readonly) NSArray *views;
-@property (nonatomic, readwrite) BOOL canDrop;
+@property (nonatomic, readonly) BOOL canDrop;
 
 - (instancetype)initWithArray:(NSArray *)array;
 - (NSArray *)modelArray;
