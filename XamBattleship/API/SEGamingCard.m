@@ -8,14 +8,17 @@
 
 #import "SEGamingCard.h"
 #import "UIColor+iOS7Colors.h"
+#import "UIView+Hierarchy.h"
 
 static NSUInteger const gameCardCornerRadius = 7;
+
 
 @interface SEGamingCard ()
 
 @property (nonatomic, strong) UIButton *button;
 
 @end
+
 
 @implementation SEGamingCard
 
@@ -53,13 +56,23 @@ static NSUInteger const gameCardCornerRadius = 7;
 
 - (void)didTouchCancelCard:(UIButton *)sender
 {
-    UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 15, 15}];
-    templateBlock.backgroundColor = [UIColor magentaColor];
-    templateBlock.layer.cornerRadius = 5;
-    templateBlock.layer.borderWidth = 0.7;
-    templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
-    [self.figure scaleToTemplateBlock:templateBlock];
-    [self.figure centerWithRect:self.view.frame];
+    if ([[SEFigureKit sharedKit].dragDropDelegate figureWillDrope:self.figure]) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.view.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.view removeFromSuperview];
+            [self.delegate cardWillDelete:self];
+        }];
+    }
+    else {
+        UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 15, 15}];
+        templateBlock.backgroundColor = [UIColor magentaColor];
+        templateBlock.layer.cornerRadius = 5;
+        templateBlock.layer.borderWidth = 0.7;
+        templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
+        [self.figure scaleToTemplateBlock:templateBlock];
+        [self.figure centerWithRect:self.view.frame];
+    }
 }
 
 - (void)didMoved:(UIButton *)sender withEvent:(UIEvent *)event
@@ -74,6 +87,7 @@ static NSUInteger const gameCardCornerRadius = 7;
     center.x += p.x - pPrev.x;
     center.y += p.y - pPrev.y;
     self.figure.view.center = center;
+    [[SEFigureKit sharedKit].dragDropDelegate figureDidMove:self.figure];
 }
 
 

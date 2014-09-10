@@ -36,12 +36,14 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 
 @interface BSPrepareBattleVC : UIViewController
 
+@property (nonatomic, weak) id<SEFigureKitDragDropDelegate> dragDropDelgate;
+
 @end
 
 
 #pragma mark - BSPrepareBattleVC Extension
 
-@interface BSPrepareBattleVC ()
+@interface BSPrepareBattleVC () <SEGamingCardDelegate>
 
 @property (nonatomic, copy) NSMutableArray /* of SEGamingCards */ *cards;
 
@@ -118,6 +120,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     templateBlock.layer.borderWidth = 0.7;
     templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
     [SEFigureKit sharedKit].templateBlock = templateBlock;
+    [SEFigureKit sharedKit].dragDropDelegate = self.dragDropDelgate;
     // Create cards with figures.
     for (NSNumber *tubesNumber in shipTubes) {
         SEFigure *newFigure = [[SEFigureKit sharedKit]figureWithNumberOfBlocks:tubesNumber color:[UIColor randomColor]];
@@ -132,6 +135,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
             cardFrame.size
         };
         SEGamingCard *newCard = [SEGamingCard cardWithFigure:newFigure frame:cardFrame];
+        newCard.delegate = self;
         [_cards addObject:newCard];
         [self.view addSubview:newCard.view];
     }
@@ -142,12 +146,19 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     NSLog(@"Did Touch the card: %@", cardButton);
 }
 
+#pragma mark SEGamingCardDelegate Protocol
+
+- (void) cardWillDelete:(SEGamingCard *)card
+{
+    [self.cards removeObject:card];
+}
+
 @end
 
 
 #pragma mark - BSBattleVC Extension
 
-@interface BSBattleVC ()
+@interface BSBattleVC () <SEFigureKitDragDropDelegate>
 
 @property (nonatomic, strong) NSMutableArray *gameFieldButtons;
 @property (nonatomic, strong) UIButton *backToMenuButton;
@@ -227,6 +238,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     self.prepareButtleVC = [[BSPrepareBattleVC alloc]init];
     [self addChildViewController:self.prepareButtleVC];
     [self.prepareButtleVC didMoveToParentViewController:self];
+    self.prepareButtleVC.dragDropDelgate = self;
     [self.view addSubview:self.prepareButtleVC.view];
 }
 
@@ -243,6 +255,24 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 - (void)didTappedBackToMenuButton:(UIButton *)sender
 {
     [self.delegate battleVCWillDismissed:self];
+}
+
+#pragma mark SEFigureKitDragDropDelegate Methods
+
+- (void) figureDidMove:(SEFigure *)figure
+{
+    NSLog(@"Figure moved!");
+}
+
+- (BOOL) figureWillDrope:(SEFigure *)figure
+{
+    CGRect figureAbsolutFrame = [figure.view.superview
+        convertRect:figure.view.frame toView:nil];
+    if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 ,320,
+    gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) ) {
+        return YES;
+    }
+    else return NO;
 }
 
 

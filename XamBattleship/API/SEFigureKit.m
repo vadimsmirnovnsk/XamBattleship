@@ -62,12 +62,6 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     }
     // Let's create new views for figure
     NSUInteger squareFactor = (int)sqrt((double)[self.modelArray count]);
-//    _view.frame = (CGRect) {
-//        0,
-//        0,
-//        templateBlock.frame.size.width * squareFactor,
-//        templateBlock.frame.size.height * squareFactor
-//    };
     CGRect newViewFrame = (CGRect){0,0,0,0};
     for (NSUInteger y = 0; y < squareFactor; y++) {
         for (NSUInteger x = 0; x < squareFactor; x++) {
@@ -113,7 +107,7 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     };
 }
 
-- (void)rotate
+- (void)rotate:(NSUInteger)times
 {
 #warning TODO: Make universal rotate for any figure.
     NSLog(@"Rotate figure");

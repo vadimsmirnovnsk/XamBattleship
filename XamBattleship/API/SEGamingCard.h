@@ -9,10 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "SEFigureKit.h"
 
+
+@class SEGamingCard;
+@protocol SEGamingCardDelegate <NSObject>
+
+- (void)cardWillDelete:(SEGamingCard *)card;
+
+@end
+
+
 @interface SEGamingCard : NSObject
 
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, strong) SEFigure *figure;
+@property (nonatomic, weak) id<SEGamingCardDelegate> delegate;
 
 + (SEGamingCard *)cardWithFigure:(SEFigure *)figure frame:(CGRect)frame;
 
