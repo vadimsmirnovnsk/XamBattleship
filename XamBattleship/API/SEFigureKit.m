@@ -52,6 +52,11 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     return _view;
 }
 
+- (NSArray *)views
+{
+    return [_viewsArray copy];
+}
+
 - (void)redrawViewWithTemplateBlock:(UIView *)templateBlock
 {
     if (self.viewsArray) {

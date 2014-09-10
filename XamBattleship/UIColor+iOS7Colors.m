@@ -17,11 +17,11 @@
         @"pizazzColor",
         @"supernovaColor",
         @"emeraldColor",
-        @"malibuColor", //
+        @"malibuColor",
         @"curiousBlueColor",
         @"azureRadianceColor",
         @"indigoColor",
-        @"mercuryColor",
+//        @"mercuryColor",
         nil];
     });
     return colors;

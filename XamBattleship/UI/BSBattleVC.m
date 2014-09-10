@@ -10,6 +10,7 @@
 #import "UIColor+iOS7Colors.h"
 #import "SEFigureKit.h"
 #import "SEGamingCard.h"
+#import "SEGameCell.h"
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
@@ -141,10 +142,6 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     }
 }
 
-- (void)didTouchCard:(UIButton *)cardButton
-{
-    NSLog(@"Did Touch the card: %@", cardButton);
-}
 
 #pragma mark SEGamingCardDelegate Protocol
 
@@ -160,7 +157,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 
 @interface BSBattleVC () <SEFigureKitDragDropDelegate>
 
-@property (nonatomic, strong) NSMutableArray *gameFieldButtons;
+@property (nonatomic, strong) NSMutableArray *gameAreaCells;
 @property (nonatomic, strong) UIButton *backToMenuButton;
 @property (nonatomic, strong) BSPrepareBattleVC * prepareButtleVC;
 
@@ -197,7 +194,7 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _gameFieldButtons = [NSMutableArray arrayWithCapacity:gameAreaWidth * gameAreaHeight];
+        _gameAreaCells = [NSMutableArray arrayWithCapacity:gameAreaWidth * gameAreaHeight];
     }
     return self;
 }
@@ -218,20 +215,21 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     // Fill the game field by UIButtons
     for (NSUInteger i = 0; i < gameAreaHeight; i++) {
         for (NSUInteger j = 0; j < gameAreaWidth; j++) {
-            UIButton *newGameCell = [[UIButton alloc]init];
-            newGameCell.frame = (CGRect){
+            SEGameCell *newGameCell = [[SEGameCell alloc]init];
+            newGameCell.button.frame = (CGRect){
                 i * gameCellWidth + gameAreaLeftAsset,
                 j * gameCellHeight + gameAreaTopAsset,
                 gameCellWidth,
                 gameCellHeight
             };
-            newGameCell.tag = j * gameAreaHeight + i;
-            newGameCell.layer.cornerRadius = 8;
-            newGameCell.layer.borderWidth = 0.7;
-            newGameCell.layer.borderColor = [UIColor lightSilverColor].CGColor;
-            newGameCell.backgroundColor = [UIColor clearColor];
-            [newGameCell addTarget:self action:@selector(didTappedGameAreaButton:) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:newGameCell];
+            newGameCell.button.tag = j * gameAreaHeight + i;
+            newGameCell.button.layer.cornerRadius = 8;
+            newGameCell.button.layer.borderWidth = 0.7;
+            newGameCell.button.layer.borderColor = [UIColor lightSilverColor].CGColor;
+            newGameCell.button.backgroundColor = [UIColor clearColor];
+            [newGameCell.button addTarget:self action:@selector(didTappedGameAreaButton:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:newGameCell.button];
+            [self.gameAreaCells addObject:newGameCell];
         }
     }
     self.view.frame = [BSBattleVC selfFrame];
@@ -257,19 +255,53 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
     [self.delegate battleVCWillDismissed:self];
 }
 
+- (void)snapFigureToGrid:(SEFigure *)figure
+{
+    for (SEGameCell *cell in self.gameAreaCells) {
+        if (cell.state == gameStateEmpty) {
+            for (UIView *block in figure.views) {
+                if (CGRectContainsPoint(cell.button.frame,
+                    [block.superview convertPoint:block.center toView:nil])) {
+                    cell.button.backgroundColor = block.backgroundColor;
+                    break;
+                }
+                else {
+                    cell.button.backgroundColor = [UIColor clearColor];
+                }
+            }
+        }
+    }
+}
+
 #pragma mark SEFigureKitDragDropDelegate Methods
 
 - (void) figureDidMove:(SEFigure *)figure
 {
     NSLog(@"Figure moved!");
+    CGRect figureAbsolutFrame = [figure.view.superview
+        convertRect:figure.view.frame toView:nil];
+    if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 , 320,
+    gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) ) {
+        [self snapFigureToGrid:figure];
+    }
 }
 
 - (BOOL) figureWillDrope:(SEFigure *)figure
 {
     CGRect figureAbsolutFrame = [figure.view.superview
         convertRect:figure.view.frame toView:nil];
-    if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 ,320,
+    if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 , 320,
     gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) ) {
+    for (SEGameCell *cell in self.gameAreaCells) {
+        for (UIView *block in figure.views) {
+            if (CGRectContainsPoint(cell.button.frame,
+                [block.superview convertPoint:block.center toView:nil])) {
+                cell.button.backgroundColor = block.backgroundColor;
+                cell.state = gameStateBusy;
+                break;
+            }
+        }
+    }
         return YES;
     }
     else return NO;

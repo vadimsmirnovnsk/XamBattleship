@@ -21,6 +21,8 @@
 @interface SEFigure : NSObject
 
 @property (nonatomic, strong) UIView *view;
+@property (nonatomic, strong, readonly) NSArray *views;
+@property (nonatomic, readwrite) BOOL canDrop;
 
 - (instancetype)initWithArray:(NSArray *)array;
 - (NSArray *)modelArray;
