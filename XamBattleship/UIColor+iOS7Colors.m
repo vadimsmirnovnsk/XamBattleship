@@ -1,8 +1,8 @@
 
 #import "UIColor+iOS7Colors.h"
 
-@implementation UIColor (iOS7Colors)
 
+@implementation UIColor (iOS7Colors)
 
 + (NSArray *)sharedColorNames
 {

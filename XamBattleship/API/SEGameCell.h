@@ -15,6 +15,8 @@ typedef NS_ENUM(NSUInteger, GameCellState) {
 };
 
 
+#pragma mark - SEGameCell Interface
+
 @interface SEGameCell : NSObject
 
 @property (nonatomic, strong) UIButton *button;

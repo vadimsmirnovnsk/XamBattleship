@@ -12,19 +12,26 @@
 static NSUInteger const gameCardCornerRadius = 7;
 
 
+#pragma mark - SEGamingCard Extension
+
 @interface SEGamingCard ()
 
 @property (nonatomic, strong) UIButton *button;
+@property (nonatomic, readwrite) BOOL isDeleted;
 
 @end
 
 
+#pragma mark - SEGamingCard Implementation
+
 @implementation SEGamingCard
 
+#pragma mark Public Methods
 + (SEGamingCard *)cardWithFigure:(SEFigure *)figure frame:(CGRect)frame
 {
     SEGamingCard *newCard = [[SEGamingCard alloc]init];
     newCard.figure = figure;
+    newCard.isDeleted = NO;
     newCard.view = [[UIView alloc]initWithFrame:frame];
     newCard.view.backgroundColor = [UIColor rhythmusBackgroundColor];
     newCard.view.layer.cornerRadius = gameCardCornerRadius;
@@ -42,6 +49,7 @@ static NSUInteger const gameCardCornerRadius = 7;
     return newCard;
 }
 
+#pragma mark Private Methods
 - (void)didTouchCard:(UIButton *)sender
 {
     UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 31, 31}];
@@ -56,12 +64,8 @@ static NSUInteger const gameCardCornerRadius = 7;
 - (void)didTouchCancelCard:(UIButton *)sender
 {
     if ([[SEFigureKit sharedKit].dragDropDelegate figureWillDrope:self.figure]) {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.view.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.view removeFromSuperview];
-            [self.delegate cardWillDelete:self];
-        }];
+        [self.delegate cardWillDelete:self];
+        _isDeleted = YES;
     }
     else {
         UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 15, 15}];
@@ -88,7 +92,5 @@ static NSUInteger const gameCardCornerRadius = 7;
     self.figure.view.center = center;
     [[SEFigureKit sharedKit].dragDropDelegate figureDidMove:self.figure];
 }
-
-
 
 @end

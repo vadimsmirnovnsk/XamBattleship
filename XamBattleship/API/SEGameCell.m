@@ -8,6 +8,9 @@
 
 #import "SEGameCell.h"
 
+
+#pragma mark - SEFameCell Implementation
+
 @implementation SEGameCell
 
 - (instancetype)init

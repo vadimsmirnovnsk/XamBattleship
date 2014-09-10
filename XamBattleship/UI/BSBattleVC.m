@@ -32,6 +32,8 @@ static NSUInteger const gameCardBlockHeight = 15;
 static NSUInteger const gameCardBlockWidth = 15;
 static NSUInteger const gameCardBlockCornerRadius = 3;
 
+static NSUInteger const cardsInRow = 4;
+
 
 #pragma mark - BSPrepareBattleVC Interface
 
@@ -129,11 +131,11 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
         CGRect cardFrame = [BSPrepareBattleVC cardFrame];
         cardFrame = (CGRect)(CGRect) {
             cardFrame.origin.x + gameCardHorizontalAsset +
-                (([_cards count]<4)?
+                (([_cards count]<cardsInRow)?
                 (cardFrame.size.width + gameCardHorizontalAsset) * [_cards count]
                 :(cardFrame.size.width + gameCardHorizontalAsset) * ([_cards count]-4)),
             cardFrame.origin.y + gameCardVerticalAsset
-            + (([_cards count]<4)? 0 : (gameCardVerticalAsset+gameCardHeight)),
+            + (([_cards count]<cardsInRow)? 0 : (gameCardVerticalAsset+gameCardHeight)),
             cardFrame.size
         };
         SEGamingCard *newCard = [SEGamingCard cardWithFigure:newFigure frame:cardFrame];
@@ -145,10 +147,24 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 
 
 #pragma mark SEGamingCardDelegate Protocol
-
 - (void) cardWillDelete:(SEGamingCard *)card
 {
-    [self.cards removeObject:card];
+    [UIView animateWithDuration:0.3 animations:^{
+        card.view.alpha = 0;
+    } completion:^(BOOL finished) {
+        NSUInteger indexOfDeletedCard = [self.cards indexOfObject:card];
+        if (indexOfDeletedCard < cardsInRow) {
+            CGRect newFrame = card.view.frame;
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.cards[cardsInRow+indexOfDeletedCard] view].frame = newFrame;
+            } completion:^(BOOL finished) {
+                [card.view removeFromSuperview];
+            }];
+        }
+        else {
+            [card.view removeFromSuperview];
+        }
+    }];
 }
 
 @end
@@ -285,7 +301,6 @@ static NSUInteger const gameCardBlockCornerRadius = 3;
 }
 
 #pragma mark SEFigureKitDragDropDelegate Methods
-
 - (void) figureDidMove:(SEFigure *)figure
 {
     [self snapFigureToGrid:figure];

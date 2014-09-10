@@ -30,7 +30,6 @@
 @implementation BSMenuVC
 
 #pragma mark BSMenuVC Custom Methods
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -93,7 +92,6 @@
 }
 
 #pragma mark UITextFieldDelegate Methods
-
 - (BOOL) textFieldShouldEndEditing:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -113,7 +111,6 @@
 }
 
 #pragma mark SRWebSocketDelegate Methods
-
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
     NSLog(@"Web socket did receive the message: %@",message);

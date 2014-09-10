@@ -14,9 +14,13 @@ typedef NS_ENUM(NSUInteger, BlockType) {
 };
 
 
+#pragma mark - SEFigureBlock Implementation
+
 @implementation SEFigureBlock
 @end
 
+
+#pragma mark - SEFigure Extansion
 
 @interface SEFigure ()
 
@@ -28,8 +32,17 @@ typedef NS_ENUM(NSUInteger, BlockType) {
 @end
 
 
+#pragma mark - SEFigure Implementation
+
 @implementation SEFigure
 
+#pragma Initializers
+/**
+ * Designated Initializer
+ *
+ * @input = NSArray with NSNumbers @(BlockType) that describes figure model
+ *
+ **/
 - (instancetype)initWithArray:(NSArray *)array
 {
     if (self = [super init]) {
@@ -72,6 +85,40 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     return canDrop;
 }
 
+#pragma Public Methods
+- (void)rotate:(NSUInteger)times
+{
+    NSMutableArray *newModelArray = [self.modelArray mutableCopy];
+    NSUInteger squareFactor = (int)sqrt((double)[self.modelArray count]);
+    for (NSUInteger time = 0; time < times; time++) {
+        for (NSUInteger i = 0 ; i < squareFactor; i++) {
+            for (NSUInteger j = 0; j < squareFactor; j++) {
+                newModelArray[i*squareFactor + j] =
+                    self.modelArray[(j+1) * squareFactor - 1 - i];
+            }
+        }
+        self.modelArray = newModelArray;
+    }
+}
+
+- (void)centerWithRect:(CGRect)rect
+{
+    [self view];
+    CGRect newFrame = (CGRect) {
+        rect.size.width/2 - _view.frame.size.width/2,
+        rect.size.height/2 - _view.frame.size.height/2,
+        _view.frame.size
+    };
+    _view.frame = newFrame;
+}
+
+- (void)scaleToTemplateBlock:(UIView *)templateBlock
+{
+    [self redrawViewWithTemplateBlock:templateBlock];
+}
+
+
+#pragma Private Methods
 - (void)redrawViewWithTemplateBlock:(UIView *)templateBlock
 {
     if (self.viewsArray) {
@@ -129,39 +176,10 @@ typedef NS_ENUM(NSUInteger, BlockType) {
     };
 }
 
-- (void)rotate:(NSUInteger)times
-{
-    NSMutableArray *newModelArray = [self.modelArray mutableCopy];
-    NSUInteger squareFactor = (int)sqrt((double)[self.modelArray count]);
-    for (NSUInteger time = 0; time < times; time++) {
-        for (NSUInteger i = 0 ; i < squareFactor; i++) {
-            for (NSUInteger j = 0; j < squareFactor; j++) {
-                newModelArray[i*squareFactor + j] =
-                    self.modelArray[(j+1) * squareFactor - 1 - i];
-            }
-        }
-        self.modelArray = newModelArray;
-    }
-}
-
-- (void)centerWithRect:(CGRect)rect
-{
-    [self view];
-    CGRect newFrame = (CGRect) {
-        rect.size.width/2 - _view.frame.size.width/2,
-        rect.size.height/2 - _view.frame.size.height/2,
-        _view.frame.size
-    };
-    _view.frame = newFrame;
-}
-
-- (void)scaleToTemplateBlock:(UIView *)templateBlock
-{
-    [self redrawViewWithTemplateBlock:templateBlock];
-}
-
 @end
 
+
+#pragma mark - SEFigureKit Implementaion
 
 @implementation SEFigureKit
 
