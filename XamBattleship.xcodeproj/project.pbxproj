@@ -24,10 +24,12 @@
 		CE178CC719B82FD000379690 /* BSMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE178CC519B82FD000379690 /* BSMenuVC.xib */; };
 		CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CCA19B882A800379690 /* BSBattleVC.m */; };
 		CE178CCD19B882A800379690 /* BSPrepareButtleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */; };
-		CE178CD019B8DC0500379690 /* UIColor+iOS7Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CCF19B8DC0500379690 /* UIColor+iOS7Colors.m */; };
 		CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CD319BB79C400379690 /* SEFigureKit.m */; };
 		CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */; };
 		CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1219C01B62008D244A /* SEGameCell.m */; };
+		CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1819C2069C008D244A /* Preferences.m */; };
+		CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */; };
+		CE9DDA2219C2071D008D244A /* BSServerAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA2119C2071D008D244A /* BSServerAPIController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,14 +65,18 @@
 		CE178CC919B882A800379690 /* BSBattleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSBattleVC.h; path = UI/BSBattleVC.h; sourceTree = "<group>"; };
 		CE178CCA19B882A800379690 /* BSBattleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSBattleVC.m; path = UI/BSBattleVC.m; sourceTree = "<group>"; };
 		CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSPrepareButtleVC.xib; path = UI/BSPrepareButtleVC.xib; sourceTree = "<group>"; };
-		CE178CCE19B8DC0500379690 /* UIColor+iOS7Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+iOS7Colors.h"; sourceTree = "<group>"; };
-		CE178CCF19B8DC0500379690 /* UIColor+iOS7Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+iOS7Colors.m"; sourceTree = "<group>"; };
 		CE178CD219BB79C400379690 /* SEFigureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEFigureKit.h; path = API/SEFigureKit.h; sourceTree = "<group>"; };
 		CE178CD319BB79C400379690 /* SEFigureKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEFigureKit.m; path = API/SEFigureKit.m; sourceTree = "<group>"; };
 		CE9DDA0B19BF1B01008D244A /* SEGamingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEGamingCard.h; path = API/SEGamingCard.h; sourceTree = "<group>"; };
 		CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEGamingCard.m; path = API/SEGamingCard.m; sourceTree = "<group>"; };
 		CE9DDA1119C01B62008D244A /* SEGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEGameCell.h; path = API/SEGameCell.h; sourceTree = "<group>"; };
 		CE9DDA1219C01B62008D244A /* SEGameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEGameCell.m; path = API/SEGameCell.m; sourceTree = "<group>"; };
+		CE9DDA1719C2069C008D244A /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Preferences.h; path = API/Preferences.h; sourceTree = "<group>"; };
+		CE9DDA1819C2069C008D244A /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Preferences.m; path = API/Preferences.m; sourceTree = "<group>"; };
+		CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+iOS7Colors.m"; path = "UI/UIColor+iOS7Colors.m"; sourceTree = "<group>"; };
+		CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+iOS7Colors.h"; path = "UI/UIColor+iOS7Colors.h"; sourceTree = "<group>"; };
+		CE9DDA2019C2071D008D244A /* BSServerAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSServerAPIController.h; path = API/BSServerAPIController.h; sourceTree = "<group>"; };
+		CE9DDA2119C2071D008D244A /* BSServerAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSServerAPIController.m; path = API/BSServerAPIController.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,8 +183,8 @@
 		CE178CC819B82FEA00379690 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				CE178CCE19B8DC0500379690 /* UIColor+iOS7Colors.h */,
-				CE178CCF19B8DC0500379690 /* UIColor+iOS7Colors.m */,
+				CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */,
+				CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */,
 				CE178CC319B82FD000379690 /* BSMenuVC.h */,
 				CE178CC419B82FD000379690 /* BSMenuVC.m */,
 				CE178CC519B82FD000379690 /* BSMenuVC.xib */,
@@ -198,6 +204,10 @@
 				CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */,
 				CE9DDA1119C01B62008D244A /* SEGameCell.h */,
 				CE9DDA1219C01B62008D244A /* SEGameCell.m */,
+				CE9DDA2019C2071D008D244A /* BSServerAPIController.h */,
+				CE9DDA2119C2071D008D244A /* BSServerAPIController.m */,
+				CE9DDA1719C2069C008D244A /* Preferences.h */,
+				CE9DDA1819C2069C008D244A /* Preferences.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -335,12 +345,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9DDA2219C2071D008D244A /* BSServerAPIController.m in Sources */,
 				CE178CC619B82FD000379690 /* BSMenuVC.m in Sources */,
 				CE178CA119B81EC500379690 /* main.m in Sources */,
 				CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */,
+				CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */,
 				CE178CA519B81EC500379690 /* BSAppDelegate.m in Sources */,
+				CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */,
 				CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */,
-				CE178CD019B8DC0500379690 /* UIColor+iOS7Colors.m in Sources */,
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
 				CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */,
 			);
