@@ -44,6 +44,7 @@ static NSUInteger const gameCardCornerRadius = 7;
     [cardButton addTarget:newCard action:@selector(didTouchCard:) forControlEvents:UIControlEventTouchDown];
     [cardButton addTarget:newCard action:@selector(didTouchCancelCard:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
     [cardButton addTarget:newCard action:@selector(didMoved:withEvent:) forControlEvents:UIControlEventTouchDragInside | UIControlEventTouchDragOutside];
+    [cardButton addTarget:newCard action:@selector(didDoubleTouchCard:) forControlEvents:UIControlEventTouchDownRepeat];
     [newCard.view addSubview:cardButton];
     [cardButton didMoveToSuperview];
     return newCard;
@@ -59,6 +60,11 @@ static NSUInteger const gameCardCornerRadius = 7;
     templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
     [self.figure scaleToTemplateBlock:templateBlock];
     [self.figure centerWithRect:self.view.frame];
+}
+
+- (void)didDoubleTouchCard:(UIButton *)sender
+{
+    [self.figure rotate:1];
 }
 
 - (void)didTouchCancelCard:(UIButton *)sender

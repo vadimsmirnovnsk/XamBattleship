@@ -10,6 +10,7 @@
 
 static NSString *const kUsernameKey = @"username";
 static NSString *const kTokenKey = @"token";
+static NSString *const kUserIDKey = @"id";
 
 
 #pragma mark - Preferences Extansion
@@ -57,6 +58,11 @@ static NSString *const kTokenKey = @"token";
     return [[NSUserDefaults standardUserDefaults] stringForKey:kTokenKey];
 }
 
+- (NSString *)userid
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kUserIDKey];
+}
+
 #pragma mark Setters
 - (void)setUsername:(NSString *)username
 {
@@ -67,6 +73,12 @@ static NSString *const kTokenKey = @"token";
 - (void)setToken:(NSString *)token
 {
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:kTokenKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setUserid:(NSString *)userid
+{
+    [[NSUserDefaults standardUserDefaults] setObject:userid forKey:kUserIDKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -97,7 +109,10 @@ static NSString *const kTokenKey = @"token";
                            forKey:kUsernameKey];
     
     [defaultsToRegister setObject:@""
-                           forKey:kTokenKey];
+                           forKey:kUsernameKey];
+    
+    [defaultsToRegister setObject:@""
+                           forKey:kUserIDKey];
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
     [[NSUserDefaults standardUserDefaults] synchronize];

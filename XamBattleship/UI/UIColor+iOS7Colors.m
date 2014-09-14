@@ -1,5 +1,6 @@
 
 #import "UIColor+iOS7Colors.h"
+#import <objc/message.h>
 
 
 @implementation UIColor (iOS7Colors)

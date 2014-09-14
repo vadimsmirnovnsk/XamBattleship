@@ -18,6 +18,7 @@
  */
 @property (nonatomic, readwrite) NSString *username;
 @property (nonatomic, readwrite) NSString *token;
+@property (nonatomic, readwrite) NSString *userid;
 
 /**
  *  Returns the shared preferences object.

@@ -21,16 +21,21 @@ static NSUInteger const gameAreaWidth = 10;
 static NSUInteger const gameAreaHeight = 10;
 static NSUInteger const gameAreaTopAsset = 20 + 44 + 5;
 static NSUInteger const gameAreaLeftAsset = 5;
-static NSUInteger const gameCellHeight = 31;
-static NSUInteger const gameCellWidth = 31;
 
-static NSUInteger const gameCardWidth = 74;
-static NSUInteger const gameCardHeight = 86;
-static NSUInteger const gameCardHorizontalAsset = 5;
-static NSUInteger const gameCardVerticalAsset = 4;
-static NSUInteger const gameCardBlockHeight = 15;
-static NSUInteger const gameCardBlockWidth = 15;
-static NSUInteger const gameCardBlockCornerRadius = 3;
+static CGFloat const gameCellHeight = 31.f;
+static CGFloat const gameCellWidth = 31.f;
+static CGFloat const gameCellCornerRadius = 8.f;
+static CGFloat const gameCellCornerWidth = 0.5f;
+
+static CGFloat const gameCardWidth = 74.f;
+static CGFloat const gameCardHeight = 86.f;
+static CGFloat const gameCardHorizontalAsset = 5.f;
+static CGFloat const gameCardVerticalAsset = 4.f;
+
+static CGFloat const gameCardBlockHeight = 15.f;
+static CGFloat const gameCardBlockWidth = 15.f;
+static CGFloat const gameCardBlockCornerRadius = 3.f;
+
 
 static NSUInteger const cardsInRow = 4;
 
@@ -240,8 +245,8 @@ static NSUInteger const cardsInRow = 4;
                 gameCellHeight
             };
             newGameCell.button.tag = j * gameAreaHeight + i;
-            newGameCell.button.layer.cornerRadius = 8;
-            newGameCell.button.layer.borderWidth = 0.7;
+            newGameCell.button.layer.cornerRadius = gameCellCornerRadius;
+            newGameCell.button.layer.borderWidth = gameCellCornerWidth;
             newGameCell.button.layer.borderColor = [UIColor lightSilverColor].CGColor;
             newGameCell.button.backgroundColor = [UIColor clearColor];
             [newGameCell.button addTarget:self action:@selector(didTappedGameAreaButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -264,7 +269,7 @@ static NSUInteger const cardsInRow = 4;
 
 - (void)didTappedGameAreaButton:(UIButton *)sender
 {
-    NSLog(@"Tapped button with tag: %d", sender.tag);
+    NSLog(@"Tapped button with tag: %ld", (long)sender.tag);
 }
 
 - (void)didTappedBackToMenuButton:(UIButton *)sender

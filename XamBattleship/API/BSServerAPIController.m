@@ -9,7 +9,18 @@
 #import "BSServerAPIController.h"
 #import "SRWebSocket.h"
 
-static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008";
+static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008"; //@"ws://echo.websocket.org";//
+
+static NSString *const kEventField = @"event";
+static NSString *const kEventFieldParameterSignIn = @"signin";
+
+static NSString *const kMessageField = @"message";
+static NSString *const kMessageFieldParameterSignedIn = @"successfuly signed in";
+static NSString *const kMessageFieldParameterSignedUp = @"A new user created for you";
+
+static NSString *const kUserIDField = @"_id";
+static NSString *const kUserNameField = @"name";
+static NSString *const kTokenField = @"token";
 
 
 #pragma mark - BSServerAPIController Extension
@@ -41,11 +52,6 @@ static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008";
     return sharedController;
 }
 
-- (instancetype)init
-{
-    NSLog(@"Please use the [BSServerAPIController sharedController] method");
-    return nil;
-}
 
 #pragma mark Public Methods
 -(void)reconnect
@@ -61,9 +67,9 @@ static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008";
 - (void)signUpWithUsername:(NSString *)username token:(NSString *)token
 {
     NSDictionary *jsonDict = @{
-             @"act" : @"signin",
-        @"username" : username,
-            @"token":token};
+        kEventField : kEventFieldParameterSignIn,
+     kUserNameField : username,
+        kTokenField : token};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:nil];
     NSString *jsonString = [[NSString alloc]initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
     [self.webSocket send:jsonString];
@@ -72,13 +78,33 @@ static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008";
 #pragma mark SRWebSocketDelegate Protocol Methods
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
-    NSLog(@"Web socket did receive the message: %@",message);
+    NSError *__autoreleasing error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:
+        [message dataUsingEncoding:NSUTF8StringEncoding]
+        options:NSJSONReadingMutableContainers error:&error];
+    NSLog(@"Web socket did receive the message: %@",jsonResponse);
+    if ([jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
+        if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedIn]) {
+                _token = jsonResponse[kTokenField];
+                _username = jsonResponse[kUserNameField];
+                [self.delegate didSignedIn:self];
+        }
+        else if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedUp]) {
+            _token = jsonResponse[kTokenField];
+            _username = jsonResponse [kUserNameField];
+            _userid = jsonResponse [kUserIDField];
+            [self.delegate didSignedUp:self];
+        }
+    }
+    else if (![jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
+        // No event
+    }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code
     reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-    NSLog(@"Web socket did closed with code: %d, reason: %@", code, reason);
+    NSLog(@"Web socket did closed with code: %ld, reason: %@", (long)code, reason);
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error

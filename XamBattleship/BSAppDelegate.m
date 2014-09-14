@@ -7,15 +7,15 @@
 //
 
 #import "BSAppDelegate.h"
-#import "BSMenuVC.h"
+#import "BSSplashScreenVC.h"
 
 @implementation BSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    BSMenuVC *rootVC = [[BSMenuVC alloc]init];
+    // Override point for customization after application launch
+    BSSplashScreenVC *rootVC = [[BSSplashScreenVC alloc]init];
     [self.window setRootViewController:rootVC];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

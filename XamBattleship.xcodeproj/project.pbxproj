@@ -30,6 +30,14 @@
 		CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1819C2069C008D244A /* Preferences.m */; };
 		CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */; };
 		CE9DDA2219C2071D008D244A /* BSServerAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA2119C2071D008D244A /* BSServerAPIController.m */; };
+		CEA20DF719C6266C00F30661 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DF419C6266C00F30661 /* Default@2x.png */; };
+		CEA20DF819C6266C00F30661 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DF519C6266C00F30661 /* Default.png */; };
+		CEA20DF919C6266C00F30661 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DF619C6266C00F30661 /* Default-568h@2x.png */; };
+		CEA20DFE19C641D900F30661 /* battleship.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFA19C641D900F30661 /* battleship.png */; };
+		CEA20DFF19C641D900F30661 /* battleship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFB19C641D900F30661 /* battleship@2x.png */; };
+		CEA20E0019C641D900F30661 /* tetris.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFC19C641D900F30661 /* tetris.png */; };
+		CEA20E0119C641D900F30661 /* tetris@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFD19C641D900F30661 /* tetris@2x.png */; };
+		CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +85,15 @@
 		CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+iOS7Colors.h"; path = "UI/UIColor+iOS7Colors.h"; sourceTree = "<group>"; };
 		CE9DDA2019C2071D008D244A /* BSServerAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSServerAPIController.h; path = API/BSServerAPIController.h; sourceTree = "<group>"; };
 		CE9DDA2119C2071D008D244A /* BSServerAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSServerAPIController.m; path = API/BSServerAPIController.m; sourceTree = "<group>"; };
+		CEA20DF419C6266C00F30661 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Images/Default@2x.png"; sourceTree = "<group>"; };
+		CEA20DF519C6266C00F30661 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Default.png; sourceTree = "<group>"; };
+		CEA20DF619C6266C00F30661 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Images/Default-568h@2x.png"; sourceTree = "<group>"; };
+		CEA20DFA19C641D900F30661 /* battleship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = battleship.png; path = Resources/Images/battleship.png; sourceTree = "<group>"; };
+		CEA20DFB19C641D900F30661 /* battleship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "battleship@2x.png"; path = "Resources/Images/battleship@2x.png"; sourceTree = "<group>"; };
+		CEA20DFC19C641D900F30661 /* tetris.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tetris.png; path = Resources/Images/tetris.png; sourceTree = "<group>"; };
+		CEA20DFD19C641D900F30661 /* tetris@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tetris@2x.png"; path = "Resources/Images/tetris@2x.png"; sourceTree = "<group>"; };
+		CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSSplashScreenVC.h; path = UI/BSSplashScreenVC.h; sourceTree = "<group>"; };
+		CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSplashScreenVC.m; path = UI/BSSplashScreenVC.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +171,7 @@
 		CE178C9B19B81EC500379690 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEA20DE619C6222F00F30661 /* Resources */,
 				CE178C9C19B81EC500379690 /* XamBattleship-Info.plist */,
 				CE178C9D19B81EC500379690 /* InfoPlist.strings */,
 				CE178CA019B81EC500379690 /* main.m */,
@@ -185,6 +203,8 @@
 			children = (
 				CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */,
 				CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */,
+				CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */,
+				CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */,
 				CE178CC319B82FD000379690 /* BSMenuVC.h */,
 				CE178CC419B82FD000379690 /* BSMenuVC.m */,
 				CE178CC519B82FD000379690 /* BSMenuVC.xib */,
@@ -210,6 +230,28 @@
 				CE9DDA1819C2069C008D244A /* Preferences.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		CEA20DE619C6222F00F30661 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CEA20DE719C6223700F30661 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		CEA20DE719C6223700F30661 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				CEA20DFA19C641D900F30661 /* battleship.png */,
+				CEA20DFB19C641D900F30661 /* battleship@2x.png */,
+				CEA20DFC19C641D900F30661 /* tetris.png */,
+				CEA20DFD19C641D900F30661 /* tetris@2x.png */,
+				CEA20DF419C6266C00F30661 /* Default@2x.png */,
+				CEA20DF519C6266C00F30661 /* Default.png */,
+				CEA20DF619C6266C00F30661 /* Default-568h@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,10 +332,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA20DF719C6266C00F30661 /* Default@2x.png in Resources */,
+				CEA20DFE19C641D900F30661 /* battleship.png in Resources */,
+				CEA20E0119C641D900F30661 /* tetris@2x.png in Resources */,
 				CE178C9F19B81EC500379690 /* InfoPlist.strings in Resources */,
+				CEA20DFF19C641D900F30661 /* battleship@2x.png in Resources */,
 				CE178CC719B82FD000379690 /* BSMenuVC.xib in Resources */,
 				CE178CA719B81EC500379690 /* Images.xcassets in Resources */,
 				CE178CCD19B882A800379690 /* BSPrepareButtleVC.xib in Resources */,
+				CEA20DF919C6266C00F30661 /* Default-568h@2x.png in Resources */,
+				CEA20E0019C641D900F30661 /* tetris.png in Resources */,
+				CEA20DF819C6266C00F30661 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +404,7 @@
 				CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */,
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
 				CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */,
+				CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
