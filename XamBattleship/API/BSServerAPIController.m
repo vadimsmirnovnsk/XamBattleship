@@ -9,8 +9,7 @@
 #import "BSServerAPIController.h"
 #import "SRWebSocket.h"
 
-static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008"; //@"ws://echo.websocket.org";//
-
+static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008"; // @"ws://echo.websocket.org";//
 static NSString *const kEventField = @"event";
 static NSString *const kEventFieldParameterSignIn = @"signin";
 
@@ -82,7 +81,7 @@ static NSString *const kTokenField = @"token";
     NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:
         [message dataUsingEncoding:NSUTF8StringEncoding]
         options:NSJSONReadingMutableContainers error:&error];
-    NSLog(@"Web socket did receive the message: %@",jsonResponse);
+    NSLog(@"Web socket did receive the message: %@",message);
     if ([jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
         if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedIn]) {
                 _token = jsonResponse[kTokenField];

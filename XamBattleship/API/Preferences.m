@@ -8,9 +8,7 @@
 
 #import "Preferences.h"
 
-static NSString *const kUsernameKey = @"username";
-static NSString *const kTokenKey = @"token";
-static NSString *const kUserIDKey = @"id";
+static NSString *const kUsersArrayKey = @"users";
 
 
 #pragma mark - Preferences Extansion
@@ -63,6 +61,11 @@ static NSString *const kUserIDKey = @"id";
     return [[NSUserDefaults standardUserDefaults] stringForKey:kUserIDKey];
 }
 
+- (NSArray *)users
+{
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:kUsersArrayKey];
+}
+
 #pragma mark Setters
 - (void)setUsername:(NSString *)username
 {
@@ -79,6 +82,12 @@ static NSString *const kUserIDKey = @"id";
 - (void)setUserid:(NSString *)userid
 {
     [[NSUserDefaults standardUserDefaults] setObject:userid forKey:kUserIDKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setUsers:(NSArray *)users
+{
+    [[NSUserDefaults standardUserDefaults] setObject:users forKey:kUsersArrayKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -113,6 +122,9 @@ static NSString *const kUserIDKey = @"id";
     
     [defaultsToRegister setObject:@""
                            forKey:kUserIDKey];
+    
+    [defaultsToRegister setObject:@[]
+                           forKey:kUsersArrayKey];
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
     [[NSUserDefaults standardUserDefaults] synchronize];

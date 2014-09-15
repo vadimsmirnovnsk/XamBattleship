@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+#pragma mark - BSSplashScreenVC Interface
+
 @interface BSSplashScreenVC : UIViewController
 
 @end

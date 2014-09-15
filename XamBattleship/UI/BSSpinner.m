@@ -10,7 +10,7 @@
 #import "SEFigureKit.h"
 #import "UIColor+iOS7Colors.h"
 
-static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle -= defaultSpeed*Pi */
+static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*Pi */
 
 
 @interface BSSpinner ()
@@ -80,8 +80,8 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle -= defaultSpeed*
 {
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.transform = CGAffineTransformMakeRotation
-            (self.spinnerAngle - 3.14 * self.speed);
-        self.spinnerAngle -= 3.14 * self.speed;
+            (self.spinnerAngle + 3.14 * self.speed);
+        self.spinnerAngle += 3.14 * self.speed;
     } completion:^(BOOL finished) {
         nil;
     }];
