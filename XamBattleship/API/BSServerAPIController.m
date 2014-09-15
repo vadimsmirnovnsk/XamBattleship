@@ -87,13 +87,17 @@ static NSString *const kTokenField = @"token";
         if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedIn]) {
                 _token = jsonResponse[kTokenField];
                 _username = jsonResponse[kUserNameField];
-                [self.delegate didSignedIn:self];
+                if ([self.delegate respondsToSelector:@selector(didSignedIn:)]) {
+                    [self.delegate didSignedIn:self];
+                }
         }
         else if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedUp]) {
             _token = jsonResponse[kTokenField];
             _username = jsonResponse [kUserNameField];
             _userid = jsonResponse [kUserIDField];
-            [self.delegate didSignedUp:self];
+            if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
+                [self.delegate didSignedUp:self];
+            }
         }
     }
     else if (![jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
@@ -115,6 +119,9 @@ static NSString *const kTokenField = @"token";
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
     NSLog(@"Socket %@ is opened",webSocket);
+    if ([self.delegate respondsToSelector:@selector(connectionDidEstablished:)]) {
+        [self.delegate connectionDidEstablished:self];
+    }
 }
 
 

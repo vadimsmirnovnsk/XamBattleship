@@ -7,7 +7,6 @@
 //
 
 #import "BSMenuVC.h"
-#import "SRWebSocket.h"
 #import "BSBattleVC.h"
 #import "Preferences.h"
 #import "BSServerAPIController.h"

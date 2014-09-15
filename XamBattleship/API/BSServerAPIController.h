@@ -14,6 +14,8 @@
 @protocol BSServerAPIControllerDelegate <NSObject>
 
 - (void)connectionDidEstablished:(BSServerAPIController *)controller;
+
+@optional
 - (void)didSignedIn:(BSServerAPIController *)controller;
 - (void)didSignedUp:(BSServerAPIController *)controller;
 

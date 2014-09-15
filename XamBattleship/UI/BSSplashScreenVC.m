@@ -8,17 +8,32 @@
 
 #import "BSSplashScreenVC.h"
 #import "UIColor+iOS7Colors.h"
-#import "SEFigureKit.h"
+#import "BSSpinner.h"
+#import "BSServerAPIController.h"
+#import "Preferences.h"
+
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
 
-@interface BSSplashScreenVC ()
+static CGRect const kTetrisImageStartFrame =   (CGRect){0.f, 160.f, 320.f, 45.f};
+static CGRect const kBattleShipStartFrame =    (CGRect){0.f, 250.f, 320.f, 20.f};
+static CGRect const kStatusLabelFrameiPhone5 = (CGRect){0.f, 518.f, 320.f, 30.f};
+static CGRect const kStatusLabelFrameiPhone =  (CGRect){0.f, 430.f, 320.f, 30.f};
+static CGRect const kSpinnerFrameiPhone5 =     (CGRect){0.f, 458.f, 320.f, 30.f};
+static CGRect const kSpinnerFrameiPhone =      (CGRect){0.f, 370.f, 320.f, 30.f};
+
+static NSTimeInterval const kAmazingRotationMinInterval = 1.0f;
+
+
+@interface BSSplashScreenVC () <BSServerAPIControllerDelegate>
 
 @property (nonatomic, strong) UIImageView *tetrisImage;
 @property (nonatomic, strong) UIImageView *battleShipImage;
-@property (nonatomic, strong) UIView *spinner;
-@property (nonatomic, strong) NSTimer *spinnerTimer;
-@property (nonatomic, readwrite) CGFloat spinnerAngle;
+@property (nonatomic, strong) BSSpinner *spinner;
 @property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) NSTimer *showSpinnerTimer;
+@property (nonatomic, readwrite) BOOL isConnected;
+@property (nonatomic, readwrite) BOOL isSignedIn;
 
 @end
 
@@ -29,40 +44,65 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [BSServerAPIController sharedController].delegate = self;
     }
     return self;
 }
 
++ (CGRect)spinnerFrame
+{
+    if (isiPhone5) {
+        return kSpinnerFrameiPhone5;
+    }
+    else {
+        return kSpinnerFrameiPhone;
+    }
+}
+
++ (CGRect)statusLabelFrame
+{
+    if (isiPhone5) {
+        return kStatusLabelFrameiPhone5;
+    }
+    else {
+        return kStatusLabelFrameiPhone;
+    }
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self createSpinner];
-    self.spinner.frame = (CGRect){self.spinner.frame.origin.x, 370, self.spinner.frame.size};
-    [self.view addSubview:self.spinner];
-    [self startSpinner];
     self.view.backgroundColor = [UIColor rhythmusLedOnColor];
     self.tetrisImage =
         [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tetris"]];
-    self.tetrisImage.frame = (CGRect){0, 160, 320, 45};
+    self.tetrisImage.frame = kTetrisImageStartFrame;
     [self.view addSubview:self.tetrisImage];
     self.battleShipImage =
         [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"battleship"]];
-    self.battleShipImage.frame = (CGRect){0, 250, 320, 20};
+    self.battleShipImage.frame = kBattleShipStartFrame;
     [self.view addSubview:self.tetrisImage];
     [self.view addSubview:self.battleShipImage];
     
-    self.statusLabel = [[UILabel alloc]initWithFrame:(CGRect){0,430,320,30}];
-    self.statusLabel.tintColor = [UIColor mineShaftColor];
+    self.statusLabel = [[UILabel alloc]initWithFrame:
+        [BSSplashScreenVC statusLabelFrame]];
+    [self.statusLabel setTextColor:[UIColor mineShaftColor]];
     self.statusLabel.text = @"Connecting to server...";
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.statusLabel];
     
+    self.spinner = [BSSpinner animatedSpinnerWithFrame:
+        [BSSplashScreenVC spinnerFrame]];
+    [self.view addSubview:self.spinner];
+    
+    self.showSpinnerTimer = [NSTimer scheduledTimerWithTimeInterval:kAmazingRotationMinInterval
+        target:self selector:@selector(checkServerConnection) userInfo:nil repeats:YES];
 }
 
 - (void)animateImages
 {
-    [UIView animateWithDuration:1 animations:^{
+    [self.spinner stopAnimation];
+    [UIView animateWithDuration:0.75 delay:0.15 usingSpringWithDamping:0.3f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.tetrisImage.frame = (CGRect){0, 60, 320, 45};
         self.battleShipImage.frame = (CGRect){0, 130, 320, 20};
     } completion:^(BOOL finished) {
@@ -70,32 +110,46 @@
     }];
 }
 
-- (void)createSpinner
+- (void)checkServerConnection
 {
-    UIView *templateBlock = [[UIView alloc]initWithFrame:(CGRect){0, 0, 15, 15}];
-    templateBlock.backgroundColor = [UIColor magentaColor];
-    templateBlock.layer.cornerRadius = 5;
-    templateBlock.layer.borderWidth = 0.7;
-    templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
-    [SEFigureKit sharedKit].templateBlock = templateBlock;
-    SEFigure *newSpinner = [[SEFigureKit sharedKit]figureWithNumberOfBlocks:@(4) color:[UIColor randomColor]];
-    [newSpinner centerWithRect:self.view.frame];
-    self.spinner = newSpinner.view;
+    if (self.isConnected) {
+        [self.showSpinnerTimer invalidate];
+        self.statusLabel.text = @"Signing in...";
+    }
 }
 
-- (void)startSpinner
+- (void)checkSigningIn
 {
-    self.spinnerTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(animateSpinner) userInfo:nil repeats:YES];
+    if (self.isSignedIn) {
+        [self.showSpinnerTimer invalidate];
+        self.statusLabel.text = [NSString stringWithFormat:
+            @"Welcome, %@!", [Preferences standardPreferences].username];
+        [self.showSpinnerTimer invalidate];
+        self.showSpinnerTimer = [NSTimer scheduledTimerWithTimeInterval:kAmazingRotationMinInterval
+            target:self selector:@selector(animateImages) userInfo:nil repeats:NO];
+    }
 }
 
-- (void)animateSpinner
+- (void)connectionDidEstablished:(BSServerAPIController *)controller
 {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.spinner.transform = CGAffineTransformMakeRotation(self.spinnerAngle - 3.14/6);
-        self.spinnerAngle -= 3.14/4;
-    } completion:^(BOOL finished) {
-        nil;
-    }];
+    self.isConnected = YES;
+    if ([Preferences standardPreferences].username.length > 0) {
+        // Not first enter
+        [[BSServerAPIController sharedController]signUpWithUsername:
+        [Preferences standardPreferences].username
+        token:[Preferences standardPreferences].token];
+        [self.showSpinnerTimer invalidate];
+        self.showSpinnerTimer = [NSTimer scheduledTimerWithTimeInterval:kAmazingRotationMinInterval
+            target:self selector:@selector(checkSigningIn) userInfo:nil repeats:YES];
+    }
+    else {
+        // First enter
+    }
+}
+
+- (void)didSignedIn:(BSServerAPIController *)controller
+{
+    self.isSignedIn = YES;
 }
 
 @end

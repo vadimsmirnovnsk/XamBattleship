@@ -38,6 +38,8 @@
 		CEA20E0019C641D900F30661 /* tetris.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFC19C641D900F30661 /* tetris.png */; };
 		CEA20E0119C641D900F30661 /* tetris@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20DFD19C641D900F30661 /* tetris@2x.png */; };
 		CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */; };
+		CEA20E0719C6AACD00F30661 /* BSSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0619C6AACD00F30661 /* BSSpinner.m */; };
+		CEA20E0A19C6BE9400F30661 /* BSSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0919C6BE9400F30661 /* BSSignupVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,10 @@
 		CEA20DFD19C641D900F30661 /* tetris@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tetris@2x.png"; path = "Resources/Images/tetris@2x.png"; sourceTree = "<group>"; };
 		CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSSplashScreenVC.h; path = UI/BSSplashScreenVC.h; sourceTree = "<group>"; };
 		CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSplashScreenVC.m; path = UI/BSSplashScreenVC.m; sourceTree = "<group>"; };
+		CEA20E0519C6AACD00F30661 /* BSSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSSpinner.h; path = UI/BSSpinner.h; sourceTree = "<group>"; };
+		CEA20E0619C6AACD00F30661 /* BSSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSpinner.m; path = UI/BSSpinner.m; sourceTree = "<group>"; };
+		CEA20E0819C6BE9400F30661 /* BSSignupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSSignupVC.h; path = UI/BSSignupVC.h; sourceTree = "<group>"; };
+		CEA20E0919C6BE9400F30661 /* BSSignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSignupVC.m; path = UI/BSSignupVC.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,6 +211,10 @@
 				CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */,
 				CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */,
 				CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */,
+				CEA20E0819C6BE9400F30661 /* BSSignupVC.h */,
+				CEA20E0919C6BE9400F30661 /* BSSignupVC.m */,
+				CEA20E0519C6AACD00F30661 /* BSSpinner.h */,
+				CEA20E0619C6AACD00F30661 /* BSSpinner.m */,
 				CE178CC319B82FD000379690 /* BSMenuVC.h */,
 				CE178CC419B82FD000379690 /* BSMenuVC.m */,
 				CE178CC519B82FD000379690 /* BSMenuVC.xib */,
@@ -401,9 +411,11 @@
 				CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */,
 				CE178CA519B81EC500379690 /* BSAppDelegate.m in Sources */,
 				CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */,
+				CEA20E0A19C6BE9400F30661 /* BSSignupVC.m in Sources */,
 				CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */,
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
 				CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */,
+				CEA20E0719C6AACD00F30661 /* BSSpinner.m in Sources */,
 				CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
