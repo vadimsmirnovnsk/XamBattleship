@@ -12,16 +12,16 @@
     dispatch_once(&onceToken, ^{
         colors = [NSArray arrayWithObjects:
 //        @"silverColor",
-        @"manateeColor",
+        @"manateeColor", // gray
         @"radicalRedColor",
         @"redOrangeColor",
-        @"pizazzColor",
+        @"pizazzColor", // orange
         @"supernovaColor",
-        @"emeraldColor",
+        @"emeraldColor", // green
         @"malibuColor",
         @"curiousBlueColor",
         @"azureRadianceColor",
-        @"indigoColor",
+        @"indigoColor", // violet
 //        @"mercuryColor",
         nil];
     });

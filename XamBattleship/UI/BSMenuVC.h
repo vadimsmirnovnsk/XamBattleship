@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class BSMenuVC;
+@protocol BSMenuVCDelegate <NSObject>
+
+- (void)connectionDidLost:(BSMenuVC *)sender;
+
+@end
+
 @interface BSMenuVC : UIViewController
+
+@property (nonatomic, weak) id<BSMenuVCDelegate> delegate;
 
 @end

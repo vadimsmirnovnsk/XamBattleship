@@ -11,6 +11,7 @@
 #import "BSSpinner.h"
 #import "BSServerAPIController.h"
 #import "Preferences.h"
+#import "BSSignupVC.h"
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
@@ -24,13 +25,18 @@ static CGRect const kSpinnerFrameiPhone =        (CGRect){0.f, 370.f, 320.f, 30.
 static CGRect const kConnectButtonFrameiPhone5 = (CGRect){30.f, 380.f, 260.f, 50.f};
 static CGRect const kConnectButtonFrameiPhone =  (CGRect){30.f, 320.f, 260.f, 50.f};
 
+static CGPoint const kSignupViewOriginiPhone =   (CGPoint){0.f, 290.f};
+static CGPoint const kSignupViewOriginiPhone5 =  (CGPoint){0.f, 378.f};
+static CGPoint const kSignupViewStartOrigin =    (CGPoint){0.f, 570.f};
+static CGFloat const kSignupViewOriginYShift =   75.f;
+
 static NSTimeInterval const kAmazingRotationMinInterval = 1.0f;
 static NSInteger const kTimerRepeats = 7;
 
 
 #pragma mark - BSSplashScreenVC Extansion
 
-@interface BSSplashScreenVC () <BSServerAPIControllerDelegate>
+@interface BSSplashScreenVC () <BSServerAPIControllerDelegate, BSSignupVCDelegate>
 
 @property (nonatomic, strong) UIImageView *tetrisImage;
 @property (nonatomic, strong) UIImageView *battleShipImage;
@@ -41,6 +47,7 @@ static NSInteger const kTimerRepeats = 7;
 @property (nonatomic, readwrite) BOOL isConnected;
 @property (nonatomic, readwrite) BOOL isSignedIn;
 @property (nonatomic, readwrite) NSInteger timerRepeats;
+@property (nonatomic, strong) BSSignupVC *signupVC;
 
 @end
 
@@ -55,21 +62,27 @@ static NSInteger const kTimerRepeats = 7;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [BSServerAPIController sharedController].delegate = self;
-        
-        //    username: New Awesome User,
-        //    token: ff26b4ca1aeb78a978ec0239b308ac71e8cbfd72
+//        {"token":"1c1a7ca1a5bb67cf9c764b507b87e827d1013269",
+//         "event":"signin",
+//         "name":"First Test Username",
+//         "_id":"54189ae5b7171b4a1eae85fb",
+//         "message":"A new user created for you",
+//         "status":2}
 
-        //    name = "New User";
-        //    token = b85e445f60044c26c53dc928d018cf9dfb200a6e;
-//        NSDictionary *firstUser = @{kUsernameKey:[Preferences standardPreferences].username,
-//                                       kTokenKey:[Preferences standardPreferences].token};
-//        NSDictionary *secondUser = @{kUsernameKey:@"New Awesome User",
-//                                        kTokenKey:@"ff26b4ca1aeb78a978ec0239b308ac71e8cbfd72"};
-//        NSDictionary *thirdUser = @{kUsernameKey:@"New User",
-//                                       kTokenKey:@"b85e445f60044c26c53dc928d018cf9dfb200a6e"};
-//        NSArray *users = @[firstUser, secondUser, thirdUser];
-//        [[Preferences standardPreferences] setUsers:users];
-//        NSLog(@"Users Array: %@", [Preferences standardPreferences].users);
+//        {"token":"10297306f01cf13905aa8fe0aa0925ebc0315d31",
+//         "event":"signin",
+//          "name":"Second Test Username",
+//           "_id":"54189e1ab7171b4a1eae85fc",
+//       "message":"A new user created for you",
+//        "status":2}
+        NSDictionary *firstUsername = @{kUsernameKey:@"First Test Username",
+            kUserIDKey: @"54189ae5b7171b4a1eae85fb",
+            kTokenKey: @"1c1a7ca1a5bb67cf9c764b507b87e827d1013269"};
+        NSDictionary *secondUsername = @{kUsernameKey:@"Second Test Username",
+            kUserIDKey: @"54189e1ab7171b4a1eae85fc",
+            kTokenKey: @"10297306f01cf13905aa8fe0aa0925ebc0315d31"};
+        NSArray *users = @[firstUsername, secondUsername];
+        [Preferences standardPreferences].users = users;
     }
     return self;
 }
@@ -105,6 +118,27 @@ static NSInteger const kTimerRepeats = 7;
     }
 }
 
++ (CGFloat)imagesOriginYShift
+{
+    if (isiPhone5) {
+        return 0.f;
+    }
+    else {
+        return 75.f;
+    }
+}
+
++ (CGPoint)signupViewOrigin
+{
+    if (isiPhone5) {
+        return kSignupViewOriginiPhone5;
+    }
+    else {
+        return kSignupViewOriginiPhone;
+    }
+}
+
+
 #pragma mark Private Methods
 - (void)viewDidLoad
 {
@@ -131,6 +165,13 @@ static NSInteger const kTimerRepeats = 7;
     [self.connectButton setTitleColor:[UIColor rhythmusLedOnColor] forState:UIControlStateNormal];
     [self.connectButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.connectButton addTarget:self action:@selector(didTouchConnectButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.signupVC = [[BSSignupVC alloc]init];
+    self.signupVC.delegate = self;
+    self.signupVC.view.frame = (CGRect) {
+        kSignupViewStartOrigin,
+        self.signupVC.view.frame.size
+    };
 
     [self connectToServer];
 }
@@ -142,12 +183,16 @@ static NSInteger const kTimerRepeats = 7;
         self.tetrisImage.frame = (CGRect){0, 60, 320, 45};
         self.battleShipImage.frame = (CGRect){0, 130, 320, 20};
     } completion:^(BOOL finished) {
-        NSLog(@"Animation Did Finished!");
+        [UIView animateWithDuration:0.5 animations:^{
+            self.statusLabel.alpha = 0.f;
+        }];
     }];
 }
 
 - (void)connectToServer
 {
+    [BSServerAPIController sharedController].delegate = self;
+    [[BSServerAPIController sharedController] openConnection];
     self.statusLabel.text = @"Connecting to server...";
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.statusLabel];
@@ -166,7 +211,7 @@ static NSInteger const kTimerRepeats = 7;
     [UIView animateWithDuration:0.3 animations:^{
         sender.alpha = 0.f;
     }];
-    [[BSServerAPIController sharedController]reconnect];
+    [[BSServerAPIController sharedController]closeConnection];
     [self connectToServer];
 }
 
@@ -181,34 +226,9 @@ static NSInteger const kTimerRepeats = 7;
     [self.view addSubview:self.connectButton];
     [UIView animateWithDuration:0.3 animations:^{
         self.connectButton.alpha = 1.f;
+        self.tetrisImage.frame = kTetrisImageStartFrame;
+        self.battleShipImage.frame = kBattleShipStartFrame;
     }];
-}
-
-- (void)checkServerConnection
-{
-    if (self.isConnected) {
-        self.timerRepeats = 0;
-        [self.showSpinnerTimer invalidate];
-        if ([Preferences standardPreferences].username.length > 0) {
-            // Not first enter
-            self.statusLabel.text = @"Signing in...";
-            [[BSServerAPIController sharedController]signUpWithUsername:
-            [Preferences standardPreferences].username
-            token:[Preferences standardPreferences].token];
-            [self.showSpinnerTimer invalidate];
-            self.showSpinnerTimer = [NSTimer scheduledTimerWithTimeInterval:kAmazingRotationMinInterval
-                target:self selector:@selector(checkSigningIn) userInfo:nil repeats:YES];
-        }
-        else {
-            // First enter
-        }
-    }
-    else {
-        self.timerRepeats = self.timerRepeats + 1;
-        if (self.timerRepeats > kTimerRepeats) {
-            [self lostConnection];
-        }
-    }
 }
 
 - (void)checkSigningIn
@@ -229,15 +249,169 @@ static NSInteger const kTimerRepeats = 7;
     }
 }
 
+- (void)checkServerConnection
+{
+    if (self.isConnected) {
+        if ([Preferences standardPreferences].username.length > 0) {
+            // Not first enter
+            [self loginWithUsername:[Preferences standardPreferences].username
+                token:[Preferences standardPreferences].token];
+        }
+        else {
+            // First enter
+            self.timerRepeats = 0;
+            [self.showSpinnerTimer invalidate];
+            [self getSignupScreen];
+        }
+    }
+    else {
+        self.timerRepeats = self.timerRepeats + 1;
+        if (self.timerRepeats > kTimerRepeats) {
+            [self lostConnection];
+        }
+    }
+}
+
+- (void)loginWithUsername:(NSString *)username token:(NSString *)token
+{
+    self.timerRepeats = 0;
+    [self.showSpinnerTimer invalidate];
+    self.statusLabel.text = @"Signing in...";
+    NSString *adaptedUsername = username;
+    NSString *adaptedToken = token;
+    if (!adaptedUsername) {
+        adaptedUsername = @"";
+    }
+    if (!adaptedToken) {
+        adaptedToken = @"";
+    }
+    [[BSServerAPIController sharedController]signUpWithUsername:adaptedUsername
+        token:adaptedToken];
+    if (!self.spinner.isAnimate) {
+        [self.spinner startAnimation];
+    }
+    self.showSpinnerTimer = [NSTimer scheduledTimerWithTimeInterval:kAmazingRotationMinInterval
+        target:self selector:@selector(checkSigningIn) userInfo:nil repeats:YES];
+}
+
+- (void)getSignupScreen
+{
+    [self.view addSubview:self.signupVC.view];
+    [self addChildViewController:self.signupVC];
+    [self.signupVC didMoveToParentViewController:self];
+    [self.showSpinnerTimer invalidate];
+    [self.spinner stopAnimation];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.signupVC.view.frame = (CGRect) {
+            [BSSplashScreenVC signupViewOrigin],
+            self.signupVC.view.frame.size
+        };
+    }];
+}
+
+- (void)dropSignupScreen:(BSSignupVC *)screen
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        screen.view.frame = (CGRect) {
+            kSignupViewStartOrigin,
+            screen.view.frame.size
+        };
+    } completion:^(BOOL finished) {
+        [self.signupVC.view removeFromSuperview];
+        [self.signupVC removeFromParentViewController];
+    }];
+}
+
 #pragma mark BSServerAPIControllerDelegate Methods
 - (void)connectionDidEstablished:(BSServerAPIController *)controller
 {
     self.isConnected = YES;
 }
 
+- (void)connectionDidLost:(BSServerAPIController *)controller
+{
+    self.isConnected = NO;
+    self.isSignedIn = NO;
+    [self dropSignupScreen:self.signupVC];
+    [[BSServerAPIController sharedController]closeConnection];
+    [self lostConnection];
+}
+
 - (void)didSignedIn:(BSServerAPIController *)controller
 {
     self.isSignedIn = YES;
+}
+
+- (void)didSignedUp:(BSServerAPIController *)controller
+{
+    NSDictionary *newUser = @{kUsernameKey:controller.username,
+                                kUserIDKey:controller.userid,
+                                 kTokenKey:controller.token};
+    NSMutableArray *newUsers = [[Preferences standardPreferences].users mutableCopy];
+    [newUsers addObject:newUser];
+    [Preferences standardPreferences].users = [newUsers copy];
+    [Preferences standardPreferences].username = controller.username;
+    [Preferences standardPreferences].userid = controller.userid;
+    [Preferences standardPreferences].token = controller.token;
+    self.isSignedIn = YES;
+}
+
+- (void)didSignInFailed:(BSServerAPIController *)controller
+{
+    [Preferences standardPreferences].username = @"";
+    [Preferences standardPreferences].token = @"";
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signing In Fail!" message:@"Sorry, you can't sign in to server with this Username. Please try to sign in with other account." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    self.timerRepeats = 0;
+    [self.showSpinnerTimer invalidate];
+    [self.spinner stopAnimation];
+    self.statusLabel.text = @"Invalid Username/Token paar.";
+}
+
+#pragma mark BSSignupVCDelegate Methods
+- (void) signupVC:(BSSignupVC *)sender willSignInWithUserName:(NSString *)username
+    token:(NSString *)token
+{
+    [self dropSignupScreen:sender];
+    [self loginWithUsername:username token:token];
+}
+
+- (void)signupVCWillShowKeyboard:(BSSignupVC *)sender
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.tetrisImage.frame = (CGRect) {
+            self.tetrisImage.frame.origin.x,
+            self.tetrisImage.frame.origin.y - [BSSplashScreenVC imagesOriginYShift],
+            self.tetrisImage.frame.size
+        };
+        self.battleShipImage.frame = (CGRect) {
+            self.battleShipImage.frame.origin.x,
+            self.battleShipImage.frame.origin.y - [BSSplashScreenVC imagesOriginYShift],
+            self.battleShipImage.frame.size
+        };
+        sender.view.frame = (CGRect) {
+            sender.view.frame.origin.x,
+            sender.view.frame.origin.y - kSignupViewOriginYShift,
+            sender.view.frame.size
+        };
+    }];
+}
+
+- (void)signupVCWillHideKeyboard:(BSSignupVC *)sender
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.tetrisImage.frame = kTetrisImageStartFrame;
+        self.battleShipImage.frame = kBattleShipStartFrame;
+        sender.view.frame = (CGRect){
+            [BSSplashScreenVC signupViewOrigin],
+            sender.view.frame.size
+        };
+    }];
+}
+
+#pragma mark UIAlertViewDelegate Protocol
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self getSignupScreen];
 }
 
 @end

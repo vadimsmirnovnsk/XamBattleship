@@ -9,13 +9,14 @@
 #import "BSServerAPIController.h"
 #import "SRWebSocket.h"
 
-static NSString *const kBaseAPIURL = @"ws://178.62.133.173:8008"; // @"ws://echo.websocket.org";//
+static NSString *const kBaseAPIURL = @"ws://178.62.133.63:8008"; // @"ws://echo.websocket.org";//
 static NSString *const kEventField = @"event";
 static NSString *const kEventFieldParameterSignIn = @"signin";
 
 static NSString *const kMessageField = @"message";
 static NSString *const kMessageFieldParameterSignedIn = @"successfuly signed in";
 static NSString *const kMessageFieldParameterSignedUp = @"A new user created for you";
+static NSString *const kMessageFieldParameterInvalidToken = @"invalid token";
 
 static NSString *const kUserIDField = @"_id";
 static NSString *const kUserNameField = @"name";
@@ -42,11 +43,6 @@ static NSString *const kTokenField = @"token";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedController = [[BSServerAPIController alloc]init];
-        sharedController.webSocket = [[SRWebSocket alloc]initWithURL:
-            [NSURL URLWithString:kBaseAPIURL]];
-        sharedController.webSocket.delegate = sharedController;
-        NSLog(@"Opening websocket connection...");
-        [sharedController.webSocket open];
     });
     return sharedController;
 }
@@ -61,6 +57,19 @@ static NSString *const kTokenField = @"token";
     self.webSocket.delegate = self;
     NSLog(@"Opening websocket connection...");
     [self.webSocket open];
+}
+
+- (void)openConnection
+{
+    self.webSocket = [[SRWebSocket alloc]initWithURL:[NSURL URLWithString:kBaseAPIURL]];
+    self.webSocket.delegate = self;
+    NSLog(@"Opening websocket connection...");
+    [self.webSocket open];
+}
+
+- (void)closeConnection
+{
+    [self.webSocket close];
 }
 
 - (void)signUpWithUsername:(NSString *)username token:(NSString *)token
@@ -98,6 +107,15 @@ static NSString *const kTokenField = @"token";
                 [self.delegate didSignedUp:self];
             }
         }
+        else if ([jsonResponse[kMessageField] isEqualToString:
+            kMessageFieldParameterInvalidToken]) {
+            if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
+                [self.delegate didSignInFailed:self];
+            }
+        }
+        else {
+            // Message is undefined
+        }
     }
     else if (![jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
         // No event
@@ -108,11 +126,17 @@ static NSString *const kTokenField = @"token";
     reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
     NSLog(@"Web socket did closed with code: %ld, reason: %@", (long)code, reason);
+    if ([self.delegate respondsToSelector:@selector(connectionDidLost:)]) {
+        [self.delegate connectionDidLost:self];
+    }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
     NSLog(@"Web socket did fail with error: %@", error);
+    if ([self.delegate respondsToSelector:@selector(connectionDidLost:)]) {
+        [self.delegate connectionDidLost:self];
+    }
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket

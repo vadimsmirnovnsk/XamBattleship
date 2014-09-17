@@ -19,6 +19,7 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, readwrite) CGFloat spinnerAngle;
 @property (nonatomic, readwrite) CGFloat speed;
+@property (nonatomic, readwrite) BOOL isAnimate;
 
 @end
 
@@ -65,6 +66,7 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
         _figure.view.alpha = 1.f;
     }];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(animateSpinner) userInfo:nil repeats:YES];
+    _isAnimate = YES;
 }
 
 - (void)stopAnimation
@@ -74,6 +76,7 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
     [UIView animateWithDuration:0.3 animations:^{
         _figure.view.alpha = 0.f;
     }];
+    _isAnimate = NO;
 }
 
 - (void)animateSpinner
@@ -86,14 +89,5 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
         nil;
     }];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

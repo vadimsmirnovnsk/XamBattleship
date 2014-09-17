@@ -13,11 +13,14 @@
 @class BSServerAPIController;
 @protocol BSServerAPIControllerDelegate <NSObject>
 
-- (void)connectionDidEstablished:(BSServerAPIController *)controller;
+@required
+- (void)connectionDidLost:(BSServerAPIController *)controller;
 
 @optional
+- (void)connectionDidEstablished:(BSServerAPIController *)controller;
 - (void)didSignedIn:(BSServerAPIController *)controller;
 - (void)didSignedUp:(BSServerAPIController *)controller;
+- (void)didSignInFailed:(BSServerAPIController *)controller;
 
 @end
 
@@ -34,5 +37,7 @@
 + (instancetype) sharedController;
 - (void)signUpWithUsername:(NSString *)username token:(NSString *)token;
 - (void)reconnect;
+- (void)openConnection;
+- (void)closeConnection;
 
 @end

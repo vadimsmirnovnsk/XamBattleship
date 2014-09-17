@@ -40,6 +40,7 @@
 		CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */; };
 		CEA20E0719C6AACD00F30661 /* BSSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0619C6AACD00F30661 /* BSSpinner.m */; };
 		CEA20E0A19C6BE9400F30661 /* BSSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0919C6BE9400F30661 /* BSSignupVC.m */; };
+		CEA20E0D19C835BD00F30661 /* DTCustomColoredAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,8 @@
 		CEA20E0619C6AACD00F30661 /* BSSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSpinner.m; path = UI/BSSpinner.m; sourceTree = "<group>"; };
 		CEA20E0819C6BE9400F30661 /* BSSignupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSSignupVC.h; path = UI/BSSignupVC.h; sourceTree = "<group>"; };
 		CEA20E0919C6BE9400F30661 /* BSSignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSignupVC.m; path = UI/BSSignupVC.m; sourceTree = "<group>"; };
+		CEA20E0B19C835BD00F30661 /* DTCustomColoredAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCustomColoredAccessory.h; sourceTree = "<group>"; };
+		CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCustomColoredAccessory.m; sourceTree = "<group>"; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -207,6 +210,8 @@
 		CE178CC819B82FEA00379690 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CEA20E0B19C835BD00F30661 /* DTCustomColoredAccessory.h */,
+				CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */,
 				CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */,
 				CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */,
 				CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */,
@@ -406,6 +411,7 @@
 			files = (
 				CE9DDA2219C2071D008D244A /* BSServerAPIController.m in Sources */,
 				CE178CC619B82FD000379690 /* BSMenuVC.m in Sources */,
+				CEA20E0D19C835BD00F30661 /* DTCustomColoredAccessory.m in Sources */,
 				CE178CA119B81EC500379690 /* main.m in Sources */,
 				CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */,
 				CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */,
