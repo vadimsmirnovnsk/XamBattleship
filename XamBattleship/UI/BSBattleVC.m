@@ -8,18 +8,21 @@
 
 #import "BSBattleVC.h"
 #import "UIColor+iOS7Colors.h"
+#import "UIView+Hierarchy.h"
 #import "SEFigureKit.h"
 #import "SEGamingCard.h"
 #import "SEGameCell.h"
+#import "BSSpinner.h"
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
 
 #pragma mark - BSBattleVC Constants
 
+static NSUInteger const kTopAsset = 0;// 20 + 44;
 static NSUInteger const gameAreaWidth = 10;
 static NSUInteger const gameAreaHeight = 10;
-static NSUInteger const gameAreaTopAsset = 20 + 44 + 5;
+static NSUInteger const gameAreaTopAsset = 5 + kTopAsset;
 static NSUInteger const gameAreaLeftAsset = 5;
 
 static CGFloat const gameCellHeight = 31.f;
@@ -37,14 +40,25 @@ static CGFloat const gameCardBlockWidth = 15.f;
 static CGFloat const gameCardBlockCornerRadius = 3.f;
 
 
-static NSUInteger const cardsInRow = 4;
+static NSUInteger const kCardsInRow = 4;
+static NSUInteger const kShipsCount = 8;
+static NSUInteger const kCardsCount = kShipsCount;
+
+
+#pragma mark - BSPrepareBattleVCDelegate Protocol
+
+@class BSPrepareBattleVC;
+@protocol BSPrepareBattleVCDelegate <NSObject>
+- (void)prepareButtleVCWillDissmissed:(BSPrepareBattleVC *)sender;
+@end
 
 
 #pragma mark - BSPrepareBattleVC Interface
 
 @interface BSPrepareBattleVC : UIViewController
 
-@property (nonatomic, weak) id<SEFigureKitDragDropDelegate> dragDropDelgate;
+@property (nonatomic, weak) id<SEFigureKitDragDropDelegate> dragDropDelegate;
+@property (nonatomic, weak) id<BSPrepareBattleVCDelegate> delegate;
 
 @end
 
@@ -54,6 +68,7 @@ static NSUInteger const cardsInRow = 4;
 @interface BSPrepareBattleVC () <SEGamingCardDelegate>
 
 @property (nonatomic, copy) NSMutableArray /* of SEGamingCards */ *cards;
+@property (nonatomic, copy) NSMutableArray /* of SEGamingCards */ *deletedCards;
 
 @end
 
@@ -68,18 +83,18 @@ static NSUInteger const cardsInRow = 4;
      {
         return (CGRect) {
             0,
-            384,
+            320 + kTopAsset,
             320,
-            184
+            248 - kTopAsset
         };
      }
      else
      {
         return (CGRect) {
             0,
-            384,
+            320 + kTopAsset,
             320,
-            96
+            160 - kTopAsset
         };
      }
 }
@@ -110,7 +125,8 @@ static NSUInteger const cardsInRow = 4;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _cards = [@[] mutableCopy];
+        _cards = [NSMutableArray arrayWithCapacity:kCardsCount];
+        _deletedCards = [NSMutableArray arrayWithCapacity:kCardsCount];
     }
     return self;
 }
@@ -128,7 +144,7 @@ static NSUInteger const cardsInRow = 4;
     templateBlock.layer.borderWidth = 0.7;
     templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
     [SEFigureKit sharedKit].templateBlock = templateBlock;
-    [SEFigureKit sharedKit].dragDropDelegate = self.dragDropDelgate;
+    [SEFigureKit sharedKit].dragDropDelegate = self.dragDropDelegate;
     // Create cards with figures.
     for (NSNumber *tubesNumber in shipTubes) {
         SEFigure *newFigure = [[SEFigureKit sharedKit]figureWithNumberOfBlocks:tubesNumber color:[UIColor randomColor]];
@@ -136,11 +152,11 @@ static NSUInteger const cardsInRow = 4;
         CGRect cardFrame = [BSPrepareBattleVC cardFrame];
         cardFrame = (CGRect)(CGRect) {
             cardFrame.origin.x + gameCardHorizontalAsset +
-                (([_cards count]<cardsInRow)?
+                (([_cards count]<kCardsInRow)?
                 (cardFrame.size.width + gameCardHorizontalAsset) * [_cards count]
                 :(cardFrame.size.width + gameCardHorizontalAsset) * ([_cards count]-4)),
             cardFrame.origin.y + gameCardVerticalAsset
-            + (([_cards count]<cardsInRow)? 0 : (gameCardVerticalAsset+gameCardHeight)),
+            + (([_cards count]<kCardsInRow)? 0 : (gameCardVerticalAsset+gameCardHeight)),
             cardFrame.size
         };
         SEGamingCard *newCard = [SEGamingCard cardWithFigure:newFigure frame:cardFrame];
@@ -152,24 +168,55 @@ static NSUInteger const cardsInRow = 4;
 
 
 #pragma mark SEGamingCardDelegate Protocol
-- (void) cardWillDelete:(SEGamingCard *)card
+- (void)cardWillDelete:(SEGamingCard *)card
 {
     [UIView animateWithDuration:0.3 animations:^{
         card.view.alpha = 0;
     } completion:^(BOOL finished) {
         NSUInteger indexOfDeletedCard = [self.cards indexOfObject:card];
-        if (indexOfDeletedCard < cardsInRow) {
+        if (indexOfDeletedCard < kCardsInRow) {
             CGRect newFrame = card.view.frame;
             [UIView animateWithDuration:0.3 animations:^{
-                [self.cards[cardsInRow+indexOfDeletedCard] view].frame = newFrame;
+                [self.cards[kCardsInRow+indexOfDeletedCard] view].frame = newFrame;
             } completion:^(BOOL finished) {
                 [card.view removeFromSuperview];
+                [self.deletedCards addObject:card];
             }];
         }
         else {
             [card.view removeFromSuperview];
+            [self.deletedCards addObject:card];
+        }
+        if ([self.deletedCards count] == kCardsCount) {
+            UIButton *letsBattle = [UIButton buttonWithType:UIButtonTypeCustom];
+            [letsBattle setFrame:(CGRect){
+                self.view.bounds.origin.x + 10,
+                self.view.bounds.origin.y + 10,
+                self.view.bounds.size.height - 20,
+                self.view.bounds.size.height - 20
+            }];
+            letsBattle.center = (CGPoint){
+                self.view.bounds.size.width / 2,
+                self.view.bounds.size.height / 2
+            };
+            letsBattle.layer.cornerRadius = (self.view.bounds.size.height - 20)/2;
+            [letsBattle setTitle:@"Let's Battle!" forState:UIControlStateNormal];
+            [letsBattle setBackgroundColor:[UIColor redOrangeColor]];
+            [letsBattle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [letsBattle setTitleColor:[UIColor mineShaftColor] forState:UIControlStateHighlighted];
+            letsBattle.alpha = 0.f;
+            [letsBattle addTarget:self action:@selector(letsBattleButtonDidTouched:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:letsBattle];
+            [UIView animateWithDuration:0.3 animations:^{
+                letsBattle.alpha = 1.f;
+            }];
         }
     }];
+}
+
+- (void)letsBattleButtonDidTouched:(UIButton *)sender
+{
+    [self.delegate prepareButtleVCWillDissmissed:self];
 }
 
 @end
@@ -177,11 +224,13 @@ static NSUInteger const cardsInRow = 4;
 
 #pragma mark - BSBattleVC Extension
 
-@interface BSBattleVC () <SEFigureKitDragDropDelegate>
+@interface BSBattleVC () <SEFigureKitDragDropDelegate, BSPrepareBattleVCDelegate>
 
 @property (nonatomic, strong) NSMutableArray *gameAreaCells;
 @property (nonatomic, strong) UIButton *backToMenuButton;
 @property (nonatomic, strong) BSPrepareBattleVC * prepareButtleVC;
+@property (nonatomic, copy) NSMutableArray *shipModelsArray;
+@property (nonatomic, strong) BSSpinner *spinner;
 
 @end
 
@@ -217,6 +266,7 @@ static NSUInteger const cardsInRow = 4;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _gameAreaCells = [NSMutableArray arrayWithCapacity:gameAreaWidth * gameAreaHeight];
+        _shipModelsArray = [NSMutableArray arrayWithCapacity:kShipsCount];
     }
     return self;
 }
@@ -233,7 +283,9 @@ static NSUInteger const cardsInRow = 4;
                 style:UIBarButtonItemStyleBordered target:self
                 action:@selector(didTouchCancelBarButtonItem:)];
         [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
+        [cancelBarButtonItem setTintColor:[UIColor whiteColor]];
     }
+    // [self.navigationController.navigationBar setBackgroundColor:[UIColor mineShaftColor]];
     // Fill the game field by UIButtons
     for (NSUInteger i = 0; i < gameAreaHeight; i++) {
         for (NSUInteger j = 0; j < gameAreaWidth; j++) {
@@ -256,9 +308,10 @@ static NSUInteger const cardsInRow = 4;
     }
     self.view.frame = [BSBattleVC selfFrame];
     self.prepareButtleVC = [[BSPrepareBattleVC alloc]init];
+    self.prepareButtleVC.delegate = self;
     [self addChildViewController:self.prepareButtleVC];
     [self.prepareButtleVC didMoveToParentViewController:self];
-    self.prepareButtleVC.dragDropDelgate = self;
+    self.prepareButtleVC.dragDropDelegate = self;
     [self.view addSubview:self.prepareButtleVC.view];
 }
 
@@ -283,7 +336,8 @@ static NSUInteger const cardsInRow = 4;
         if (cell.state == gameStateEmpty) {
             for (SEFigureBlock *block in figure.views) {
                 if (CGRectContainsPoint(cell.button.frame,
-                    [block.superview convertPoint:block.center toView:nil])) {
+                    [block.superview convertPoint:block.center toView:self.view]
+                    /*[block.superview convertPoint:block.center toView:nil]*/)) {
                     block.backgroundColor = block.surfaceColor;
                     cell.button.backgroundColor = block.backgroundColor;
                     block.canDrop = YES;
@@ -297,7 +351,7 @@ static NSUInteger const cardsInRow = 4;
         else if (cell.state == gameStateBusy)
         for (SEFigureBlock *block in figure.views) {
             if (CGRectContainsPoint(cell.button.frame,
-                [block.superview convertPoint:block.center toView:nil])) {
+                [block.superview convertPoint:block.center toView:self.view])) {
                 block.backgroundColor = [UIColor redColor];
                 block.canDrop = NO;
             }
@@ -306,27 +360,35 @@ static NSUInteger const cardsInRow = 4;
 }
 
 #pragma mark SEFigureKitDragDropDelegate Methods
-- (void) figureDidMove:(SEFigure *)figure
+- (void)figureDidMove:(SEFigure *)figure
 {
     [self snapFigureToGrid:figure];
+}
+
+- (void)figureDidTouched:(SEFigure *)figure
+{
+    [figure.view bringToFrontOfView:self.view];
 }
 
 - (BOOL) figureWillDrope:(SEFigure *)figure
 {
     CGRect figureAbsolutFrame = [figure.view.superview
-        convertRect:figure.view.frame toView:nil];
+        convertRect:figure.view.frame toView:self.view];
     if (CGRectContainsRect((CGRect){0, gameAreaTopAsset - 5 , 320,
     gameAreaHeight * gameCellHeight + 10}, figureAbsolutFrame) && ([figure canDrop])) {
+        NSMutableArray *newShipModel = [NSMutableArray array];
         for (SEGameCell *cell in self.gameAreaCells) {
             for (SEFigureBlock *block in figure.views) {
                 if (CGRectContainsPoint(cell.button.frame,
-                    [block.superview convertPoint:block.center toView:nil])) {
+                    [block.superview convertPoint:block.center toView:self.view])) {
                     cell.button.backgroundColor = block.backgroundColor;
                     cell.state = gameStateBusy;
+                    [newShipModel addObject:@(cell.button.tag)];
                     break;
                 }
             }
         }
+        [self.shipModelsArray addObject:newShipModel];
         return YES;
     }
     else {
@@ -334,6 +396,19 @@ static NSUInteger const cardsInRow = 4;
         [self snapFigureToGrid:figure];
         return NO;
     }
+}
+
+#pragma mark BSPrepareBattleVCDelegate Protocol
+- (void) prepareButtleVCWillDissmissed:(BSPrepareBattleVC *)sender
+{
+    UIView *grayView = [[UIView alloc]initWithFrame:(CGRect){0.f, 0.f, 320.f, 568.f}];
+    grayView.backgroundColor = [UIColor mineShaftColor];
+    grayView.alpha = 0.7f;
+    [self.view addSubview:grayView];
+    self.spinner = [BSSpinner animatedSpinnerWithFrame:
+        [[UIScreen mainScreen] bounds]];
+    [self.view addSubview:self.spinner];
+    [self.spinner startAnimation];
 }
 
 

@@ -8,19 +8,7 @@
 
 #import "BSServerAPIController.h"
 #import "SRWebSocket.h"
-
-static NSString *const kBaseAPIURL = @"ws://178.62.133.63:8008"; // @"ws://echo.websocket.org";//
-static NSString *const kEventField = @"event";
-static NSString *const kEventFieldParameterSignIn = @"signin";
-
-static NSString *const kMessageField = @"message";
-static NSString *const kMessageFieldParameterSignedIn = @"successfuly signed in";
-static NSString *const kMessageFieldParameterSignedUp = @"A new user created for you";
-static NSString *const kMessageFieldParameterInvalidToken = @"invalid token";
-
-static NSString *const kUserIDField = @"_id";
-static NSString *const kUserNameField = @"name";
-static NSString *const kTokenField = @"token";
+#import "NSDictionary+isJsonValid.h"
 
 
 #pragma mark - BSServerAPIController Extension
@@ -74,10 +62,14 @@ static NSString *const kTokenField = @"token";
 
 - (void)signUpWithUsername:(NSString *)username token:(NSString *)token
 {
+    NSDictionary *dataDict = @{
+        kDataFieldParameterName  : username,
+        kDataFieldParameterToken : token
+    };
     NSDictionary *jsonDict = @{
         kEventField : kEventFieldParameterSignIn,
-     kUserNameField : username,
-        kTokenField : token};
+        kDataField  : dataDict
+    };
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:nil];
     NSString *jsonString = [[NSString alloc]initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
     [self.webSocket send:jsonString];
@@ -91,34 +83,36 @@ static NSString *const kTokenField = @"token";
         [message dataUsingEncoding:NSUTF8StringEncoding]
         options:NSJSONReadingMutableContainers error:&error];
     NSLog(@"Web socket did receive the message: %@",message);
-    if ([jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
-        if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedIn]) {
-                _token = jsonResponse[kTokenField];
-                _username = jsonResponse[kUserNameField];
-                if ([self.delegate respondsToSelector:@selector(didSignedIn:)]) {
-                    [self.delegate didSignedIn:self];
+    
+    if ([jsonResponse isJsonValid]) {
+        // We have "event" and "data" fields
+        if ([jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
+            if ([jsonResponse[kDataField][kDataFieldParameterResult]
+                isEqualToString: kDataFieldParameterResultSignedIn]) {
+                    _token = jsonResponse[kDataField][kDataFieldParameterToken];
+                    _username = jsonResponse[kDataField][kDataFieldParameterName];
+                    if ([self.delegate respondsToSelector:@selector(didSignedIn:)]) {
+                        [self.delegate didSignedIn:self];
+                    }
+            }
+            else if ([jsonResponse[kDataField][kDataFieldParameterResult]
+                isEqualToString: kDataFieldParameterResultSignedUp]) {
+                _token = jsonResponse[kDataField][kDataFieldParameterToken];
+                _username = jsonResponse[kDataField][kDataFieldParameterName];
+                if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
+                    [self.delegate didSignedUp:self];
                 }
-        }
-        else if ([jsonResponse[kMessageField] isEqualToString: kMessageFieldParameterSignedUp]) {
-            _token = jsonResponse[kTokenField];
-            _username = jsonResponse [kUserNameField];
-            _userid = jsonResponse [kUserIDField];
-            if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
-                [self.delegate didSignedUp:self];
+            }
+            else if ([jsonResponse[kDataField][kDataFieldParameterResult]
+                isEqualToString: kDataFieldParameterResultFailed]) {
+                if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
+                    [self.delegate didSignInFailed:self];
+                }
+            }
+            else {
+                // Message is undefined
             }
         }
-        else if ([jsonResponse[kMessageField] isEqualToString:
-            kMessageFieldParameterInvalidToken]) {
-            if ([self.delegate respondsToSelector:@selector(didSignedUp:)]) {
-                [self.delegate didSignInFailed:self];
-            }
-        }
-        else {
-            // Message is undefined
-        }
-    }
-    else if (![jsonResponse[kEventField] isEqualToString:kEventFieldParameterSignIn]) {
-        // No event
     }
 }
 

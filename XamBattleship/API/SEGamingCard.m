@@ -8,6 +8,7 @@
 
 #import "SEGamingCard.h"
 #import "UIColor+iOS7Colors.h"
+#import "UIView+Hierarchy.h"
 
 static NSUInteger const gameCardCornerRadius = 7;
 
@@ -44,7 +45,7 @@ static NSUInteger const gameCardCornerRadius = 7;
     [cardButton addTarget:newCard action:@selector(didTouchCard:) forControlEvents:UIControlEventTouchDown];
     [cardButton addTarget:newCard action:@selector(didTouchCancelCard:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
     [cardButton addTarget:newCard action:@selector(didMoved:withEvent:) forControlEvents:UIControlEventTouchDragInside | UIControlEventTouchDragOutside];
-    [cardButton addTarget:newCard action:@selector(didDoubleTouchCard:) forControlEvents:UIControlEventTouchDownRepeat];
+    [cardButton addTarget:newCard action:@selector(didDoubleTouchCard:withEvent:) forControlEvents:UIControlEventTouchDownRepeat];
     [newCard.view addSubview:cardButton];
     [cardButton didMoveToSuperview];
     return newCard;
@@ -58,11 +59,13 @@ static NSUInteger const gameCardCornerRadius = 7;
     templateBlock.layer.cornerRadius = 8;
     templateBlock.layer.borderWidth = 0.7;
     templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
+    
     [self.figure scaleToTemplateBlock:templateBlock];
     [self.figure centerWithRect:self.view.frame];
+    [[SEFigureKit sharedKit].dragDropDelegate figureDidTouched:self.figure];
 }
 
-- (void)didDoubleTouchCard:(UIButton *)sender
+- (void)didDoubleTouchCard:(UIButton *)sender withEvent:(UIEvent *)event
 {
     [self.figure rotate:1];
 }
@@ -81,6 +84,7 @@ static NSUInteger const gameCardCornerRadius = 7;
         templateBlock.layer.borderColor = [UIColor clearColor].CGColor;
         [self.figure scaleToTemplateBlock:templateBlock];
         [self.figure centerWithRect:self.view.frame];
+        [self.figure.view sendToBackOfView:self.button];
     }
 }
 

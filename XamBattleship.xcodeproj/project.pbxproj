@@ -25,6 +25,7 @@
 		CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CCA19B882A800379690 /* BSBattleVC.m */; };
 		CE178CCD19B882A800379690 /* BSPrepareButtleVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */; };
 		CE178CD419BB79C400379690 /* SEFigureKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CE178CD319BB79C400379690 /* SEFigureKit.m */; };
+		CE56DC3A19DD1CFD00075864 /* NSDictionary+isJsonValid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE56DC3919DD1CFD00075864 /* NSDictionary+isJsonValid.m */; };
 		CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */; };
 		CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1219C01B62008D244A /* SEGameCell.m */; };
 		CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9DDA1819C2069C008D244A /* Preferences.m */; };
@@ -41,6 +42,20 @@
 		CEA20E0719C6AACD00F30661 /* BSSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0619C6AACD00F30661 /* BSSpinner.m */; };
 		CEA20E0A19C6BE9400F30661 /* BSSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0919C6BE9400F30661 /* BSSignupVC.m */; };
 		CEA20E0D19C835BD00F30661 /* DTCustomColoredAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */; };
+		CEA20E1519CAB7BE00F30661 /* statistics_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E1319CAB7BE00F30661 /* statistics_bg.png */; };
+		CEA20E1619CAB7BE00F30661 /* statistics_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E1419CAB7BE00F30661 /* statistics_bg@2x.png */; };
+		CEA20E1919CB61F800F30661 /* BSBattleWithFriendsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E1819CB61F800F30661 /* BSBattleWithFriendsVC.m */; };
+		CEA20E2219CB63B900F30661 /* BSFriendsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E2019CB63B900F30661 /* BSFriendsListVC.m */; };
+		CEA20E2319CB63B900F30661 /* BSFriendsListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E2119CB63B900F30661 /* BSFriendsListVC.xib */; };
+		CEA20E2719CB684400F30661 /* BSFindFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E2519CB684400F30661 /* BSFindFriendVC.m */; };
+		CEA20E2819CB684400F30661 /* BSFindFriendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E2619CB684400F30661 /* BSFindFriendVC.xib */; };
+		CEA20E2B19CB6D6400F30661 /* navBar.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E2919CB6D6400F30661 /* navBar.png */; };
+		CEA20E2C19CB6D6400F30661 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E2A19CB6D6400F30661 /* navBar@2x.png */; };
+		CEA20E2F19CD6FA800F30661 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E2E19CD6FA800F30661 /* UIView+Hierarchy.m */; };
+		CEA20E3319CD83D800F30661 /* BSInviteFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA20E3119CD83D800F30661 /* BSInviteFriendVC.m */; };
+		CEA20E3419CD83D800F30661 /* BSInviteFriendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA20E3219CD83D800F30661 /* BSInviteFriendVC.xib */; };
+		CEA20E3719CD913D00F30661 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA20E3519CD913D00F30661 /* AddressBook.framework */; };
+		CEA20E3819CD913D00F30661 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA20E3619CD913D00F30661 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +93,8 @@
 		CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSPrepareButtleVC.xib; path = UI/BSPrepareButtleVC.xib; sourceTree = "<group>"; };
 		CE178CD219BB79C400379690 /* SEFigureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEFigureKit.h; path = API/SEFigureKit.h; sourceTree = "<group>"; };
 		CE178CD319BB79C400379690 /* SEFigureKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEFigureKit.m; path = API/SEFigureKit.m; sourceTree = "<group>"; };
+		CE56DC3819DD1CFD00075864 /* NSDictionary+isJsonValid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+isJsonValid.h"; path = "API/NSDictionary+isJsonValid.h"; sourceTree = "<group>"; };
+		CE56DC3919DD1CFD00075864 /* NSDictionary+isJsonValid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+isJsonValid.m"; path = "API/NSDictionary+isJsonValid.m"; sourceTree = "<group>"; };
 		CE9DDA0B19BF1B01008D244A /* SEGamingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEGamingCard.h; path = API/SEGamingCard.h; sourceTree = "<group>"; };
 		CE9DDA0C19BF1B01008D244A /* SEGamingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEGamingCard.m; path = API/SEGamingCard.m; sourceTree = "<group>"; };
 		CE9DDA1119C01B62008D244A /* SEGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEGameCell.h; path = API/SEGameCell.h; sourceTree = "<group>"; };
@@ -103,6 +120,25 @@
 		CEA20E0919C6BE9400F30661 /* BSSignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSSignupVC.m; path = UI/BSSignupVC.m; sourceTree = "<group>"; };
 		CEA20E0B19C835BD00F30661 /* DTCustomColoredAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCustomColoredAccessory.h; sourceTree = "<group>"; };
 		CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTCustomColoredAccessory.m; sourceTree = "<group>"; };
+		CEA20E1319CAB7BE00F30661 /* statistics_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = statistics_bg.png; path = Resources/Images/statistics_bg.png; sourceTree = "<group>"; };
+		CEA20E1419CAB7BE00F30661 /* statistics_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statistics_bg@2x.png"; path = "Resources/Images/statistics_bg@2x.png"; sourceTree = "<group>"; };
+		CEA20E1719CB61F800F30661 /* BSBattleWithFriendsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSBattleWithFriendsVC.h; path = UI/BSBattleWithFriendsVC.h; sourceTree = "<group>"; };
+		CEA20E1819CB61F800F30661 /* BSBattleWithFriendsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSBattleWithFriendsVC.m; path = UI/BSBattleWithFriendsVC.m; sourceTree = "<group>"; };
+		CEA20E1F19CB63B900F30661 /* BSFriendsListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSFriendsListVC.h; path = UI/BSFriendsListVC.h; sourceTree = "<group>"; };
+		CEA20E2019CB63B900F30661 /* BSFriendsListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSFriendsListVC.m; path = UI/BSFriendsListVC.m; sourceTree = "<group>"; };
+		CEA20E2119CB63B900F30661 /* BSFriendsListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSFriendsListVC.xib; path = UI/BSFriendsListVC.xib; sourceTree = "<group>"; };
+		CEA20E2419CB684400F30661 /* BSFindFriendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSFindFriendVC.h; path = UI/BSFindFriendVC.h; sourceTree = "<group>"; };
+		CEA20E2519CB684400F30661 /* BSFindFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSFindFriendVC.m; path = UI/BSFindFriendVC.m; sourceTree = "<group>"; };
+		CEA20E2619CB684400F30661 /* BSFindFriendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSFindFriendVC.xib; path = UI/BSFindFriendVC.xib; sourceTree = "<group>"; };
+		CEA20E2919CB6D6400F30661 /* navBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navBar.png; path = Resources/Images/navBar.png; sourceTree = "<group>"; };
+		CEA20E2A19CB6D6400F30661 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navBar@2x.png"; path = "Resources/Images/navBar@2x.png"; sourceTree = "<group>"; };
+		CEA20E2D19CD6FA800F30661 /* UIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Hierarchy.h"; sourceTree = "<group>"; };
+		CEA20E2E19CD6FA800F30661 /* UIView+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Hierarchy.m"; sourceTree = "<group>"; };
+		CEA20E3019CD83D800F30661 /* BSInviteFriendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSInviteFriendVC.h; path = UI/BSInviteFriendVC.h; sourceTree = "<group>"; };
+		CEA20E3119CD83D800F30661 /* BSInviteFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSInviteFriendVC.m; path = UI/BSInviteFriendVC.m; sourceTree = "<group>"; };
+		CEA20E3219CD83D800F30661 /* BSInviteFriendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSInviteFriendVC.xib; path = UI/BSInviteFriendVC.xib; sourceTree = "<group>"; };
+		CEA20E3519CD913D00F30661 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		CEA20E3619CD913D00F30661 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F30467A8DFCF48DC9D84A5FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45E61EA9C604E40848A9190 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +148,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA20E3719CD913D00F30661 /* AddressBook.framework in Frameworks */,
+				CEA20E3819CD913D00F30661 /* AddressBookUI.framework in Frameworks */,
 				CE178C9719B81EC500379690 /* CoreGraphics.framework in Frameworks */,
 				CE178C9919B81EC500379690 /* UIKit.framework in Frameworks */,
 				CE178C9519B81EC500379690 /* Foundation.framework in Frameworks */,
@@ -155,6 +193,8 @@
 		CE178C9319B81EC500379690 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEA20E3519CD913D00F30661 /* AddressBook.framework */,
+				CEA20E3619CD913D00F30661 /* AddressBookUI.framework */,
 				CE178C9419B81EC500379690 /* Foundation.framework */,
 				CE178C9619B81EC500379690 /* CoreGraphics.framework */,
 				CE178C9819B81EC500379690 /* UIKit.framework */,
@@ -210,22 +250,15 @@
 		CE178CC819B82FEA00379690 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CEA20E1119CAA67E00F30661 /* Start Screen */,
 				CEA20E0B19C835BD00F30661 /* DTCustomColoredAccessory.h */,
 				CEA20E0C19C835BD00F30661 /* DTCustomColoredAccessory.m */,
 				CE9DDA1E19C206D4008D244A /* UIColor+iOS7Colors.h */,
 				CE9DDA1D19C206D4008D244A /* UIColor+iOS7Colors.m */,
-				CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */,
-				CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */,
-				CEA20E0819C6BE9400F30661 /* BSSignupVC.h */,
-				CEA20E0919C6BE9400F30661 /* BSSignupVC.m */,
+				CE56DC3819DD1CFD00075864 /* NSDictionary+isJsonValid.h */,
+				CE56DC3919DD1CFD00075864 /* NSDictionary+isJsonValid.m */,
 				CEA20E0519C6AACD00F30661 /* BSSpinner.h */,
 				CEA20E0619C6AACD00F30661 /* BSSpinner.m */,
-				CE178CC319B82FD000379690 /* BSMenuVC.h */,
-				CE178CC419B82FD000379690 /* BSMenuVC.m */,
-				CE178CC519B82FD000379690 /* BSMenuVC.xib */,
-				CE178CC919B882A800379690 /* BSBattleVC.h */,
-				CE178CCA19B882A800379690 /* BSBattleVC.m */,
-				CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -243,6 +276,8 @@
 				CE9DDA2119C2071D008D244A /* BSServerAPIController.m */,
 				CE9DDA1719C2069C008D244A /* Preferences.h */,
 				CE9DDA1819C2069C008D244A /* Preferences.m */,
+				CEA20E2D19CD6FA800F30661 /* UIView+Hierarchy.h */,
+				CEA20E2E19CD6FA800F30661 /* UIView+Hierarchy.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -258,6 +293,10 @@
 		CEA20DE719C6223700F30661 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CEA20E2919CB6D6400F30661 /* navBar.png */,
+				CEA20E2A19CB6D6400F30661 /* navBar@2x.png */,
+				CEA20E1319CAB7BE00F30661 /* statistics_bg.png */,
+				CEA20E1419CAB7BE00F30661 /* statistics_bg@2x.png */,
 				CEA20DFA19C641D900F30661 /* battleship.png */,
 				CEA20DFB19C641D900F30661 /* battleship@2x.png */,
 				CEA20DFC19C641D900F30661 /* tetris.png */,
@@ -267,6 +306,42 @@
 				CEA20DF619C6266C00F30661 /* Default-568h@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		CEA20E1119CAA67E00F30661 /* Start Screen */ = {
+			isa = PBXGroup;
+			children = (
+				CEA20E0219C644B200F30661 /* BSSplashScreenVC.h */,
+				CEA20E0319C644B200F30661 /* BSSplashScreenVC.m */,
+				CEA20E0819C6BE9400F30661 /* BSSignupVC.h */,
+				CEA20E0919C6BE9400F30661 /* BSSignupVC.m */,
+				CEA20E1219CAA69D00F30661 /* Menu Screen */,
+			);
+			name = "Start Screen";
+			sourceTree = "<group>";
+		};
+		CEA20E1219CAA69D00F30661 /* Menu Screen */ = {
+			isa = PBXGroup;
+			children = (
+				CE178CC319B82FD000379690 /* BSMenuVC.h */,
+				CE178CC419B82FD000379690 /* BSMenuVC.m */,
+				CE178CC519B82FD000379690 /* BSMenuVC.xib */,
+				CEA20E1719CB61F800F30661 /* BSBattleWithFriendsVC.h */,
+				CEA20E1819CB61F800F30661 /* BSBattleWithFriendsVC.m */,
+				CEA20E1F19CB63B900F30661 /* BSFriendsListVC.h */,
+				CEA20E2019CB63B900F30661 /* BSFriendsListVC.m */,
+				CEA20E2119CB63B900F30661 /* BSFriendsListVC.xib */,
+				CEA20E2419CB684400F30661 /* BSFindFriendVC.h */,
+				CEA20E2519CB684400F30661 /* BSFindFriendVC.m */,
+				CEA20E2619CB684400F30661 /* BSFindFriendVC.xib */,
+				CEA20E3019CD83D800F30661 /* BSInviteFriendVC.h */,
+				CEA20E3119CD83D800F30661 /* BSInviteFriendVC.m */,
+				CEA20E3219CD83D800F30661 /* BSInviteFriendVC.xib */,
+				CE178CC919B882A800379690 /* BSBattleVC.h */,
+				CE178CCA19B882A800379690 /* BSBattleVC.m */,
+				CE178CCB19B882A800379690 /* BSPrepareButtleVC.xib */,
+			);
+			name = "Menu Screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,14 +422,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA20E1619CAB7BE00F30661 /* statistics_bg@2x.png in Resources */,
 				CEA20DF719C6266C00F30661 /* Default@2x.png in Resources */,
 				CEA20DFE19C641D900F30661 /* battleship.png in Resources */,
+				CEA20E2319CB63B900F30661 /* BSFriendsListVC.xib in Resources */,
+				CEA20E2C19CB6D6400F30661 /* navBar@2x.png in Resources */,
 				CEA20E0119C641D900F30661 /* tetris@2x.png in Resources */,
 				CE178C9F19B81EC500379690 /* InfoPlist.strings in Resources */,
 				CEA20DFF19C641D900F30661 /* battleship@2x.png in Resources */,
+				CEA20E2B19CB6D6400F30661 /* navBar.png in Resources */,
 				CE178CC719B82FD000379690 /* BSMenuVC.xib in Resources */,
 				CE178CA719B81EC500379690 /* Images.xcassets in Resources */,
+				CEA20E1519CAB7BE00F30661 /* statistics_bg.png in Resources */,
+				CEA20E2819CB684400F30661 /* BSFindFriendVC.xib in Resources */,
 				CE178CCD19B882A800379690 /* BSPrepareButtleVC.xib in Resources */,
+				CEA20E3419CD83D800F30661 /* BSInviteFriendVC.xib in Resources */,
 				CEA20DF919C6266C00F30661 /* Default-568h@2x.png in Resources */,
 				CEA20E0019C641D900F30661 /* tetris.png in Resources */,
 				CEA20DF819C6266C00F30661 /* Default.png in Resources */,
@@ -409,6 +491,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA20E1919CB61F800F30661 /* BSBattleWithFriendsVC.m in Sources */,
+				CE56DC3A19DD1CFD00075864 /* NSDictionary+isJsonValid.m in Sources */,
+				CEA20E2219CB63B900F30661 /* BSFriendsListVC.m in Sources */,
 				CE9DDA2219C2071D008D244A /* BSServerAPIController.m in Sources */,
 				CE178CC619B82FD000379690 /* BSMenuVC.m in Sources */,
 				CEA20E0D19C835BD00F30661 /* DTCustomColoredAccessory.m in Sources */,
@@ -417,10 +502,13 @@
 				CE9DDA1F19C206D4008D244A /* UIColor+iOS7Colors.m in Sources */,
 				CE178CA519B81EC500379690 /* BSAppDelegate.m in Sources */,
 				CE9DDA1B19C2069C008D244A /* Preferences.m in Sources */,
+				CEA20E2F19CD6FA800F30661 /* UIView+Hierarchy.m in Sources */,
 				CEA20E0A19C6BE9400F30661 /* BSSignupVC.m in Sources */,
 				CE9DDA1319C01B62008D244A /* SEGameCell.m in Sources */,
 				CE178CCC19B882A800379690 /* BSBattleVC.m in Sources */,
 				CE9DDA0D19BF1B01008D244A /* SEGamingCard.m in Sources */,
+				CEA20E2719CB684400F30661 /* BSFindFriendVC.m in Sources */,
+				CEA20E3319CD83D800F30661 /* BSInviteFriendVC.m in Sources */,
 				CEA20E0719C6AACD00F30661 /* BSSpinner.m in Sources */,
 				CEA20E0419C644B200F30661 /* BSSplashScreenVC.m in Sources */,
 			);

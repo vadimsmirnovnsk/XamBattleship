@@ -19,7 +19,7 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, readwrite) CGFloat spinnerAngle;
 @property (nonatomic, readwrite) CGFloat speed;
-@property (nonatomic, readwrite) BOOL isAnimate;
+@property (atomic, readwrite) BOOL isAnimate;
 
 @end
 
@@ -60,13 +60,15 @@ static CGFloat const kDefaultSpeed = 0.4f; /* Every 0.25s angle += defaultSpeed*
 
 - (void)startAnimation
 {
-    _figure.view.alpha = 0.f;
+    if (!self.isAnimate) {
+        _figure.view.alpha = 0.f;
     [self addSubview:_figure.view];
     [UIView animateWithDuration:0.3 animations:^{
         _figure.view.alpha = 1.f;
     }];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(animateSpinner) userInfo:nil repeats:YES];
     _isAnimate = YES;
+    }
 }
 
 - (void)stopAnimation

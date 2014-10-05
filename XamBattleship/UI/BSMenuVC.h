@@ -7,16 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BSServerAPIController.h"
 
 @class BSMenuVC;
 @protocol BSMenuVCDelegate <NSObject>
 
-- (void)connectionDidLost:(BSMenuVC *)sender;
+- (void)menuVCWillHide:(BSMenuVC *)sender;
+- (void)menuVCWillLogout:(BSMenuVC *)sender;
 
 @end
 
+
 @interface BSMenuVC : UIViewController
 
-@property (nonatomic, weak) id<BSMenuVCDelegate> delegate;
+@property (nonatomic, weak) id<BSMenuVCDelegate, BSServerAPIControllerDelegate> delegate;
+- (void)loadUserProfile;
 
 @end

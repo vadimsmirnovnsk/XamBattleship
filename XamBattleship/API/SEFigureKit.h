@@ -16,6 +16,7 @@
 
 - (void)figureDidMove:(SEFigure *)figure;
 - (BOOL)figureWillDrope:(SEFigure *)figure;
+- (void)figureDidTouched:(SEFigure *)figure;
 
 @end
 

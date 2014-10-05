@@ -28,7 +28,7 @@
     return colors;
 }
 
-+ (UIColor *) randomColor
++ (UIColor *)randomColor
 {
     NSString *message = [UIColor sharedColorNames]
         [arc4random() % [[UIColor sharedColorNames] count]];

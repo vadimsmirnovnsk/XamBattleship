@@ -10,7 +10,7 @@
 
 @interface BSSpinner : UIView
 
-@property (nonatomic, readonly) BOOL isAnimate;
+@property (atomic, readonly) BOOL isAnimate;
 
 + (BSSpinner *)animatedSpinnerWithFrame:(CGRect)frame;
 + (BSSpinner *)animatedSpinnerWithFrame:(CGRect)frame speed:(CGFloat/* 0..1 */)speed;

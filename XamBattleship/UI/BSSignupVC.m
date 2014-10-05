@@ -77,8 +77,6 @@ static NSString *const userCellId = @"UserCellId";
     if ([[Preferences standardPreferences].users count]>0) {
         [self.view addSubview:self.tableView];
     }
-    
-    [self prepareControlsWithUsername];
 }
 
 - (void)prepareControlsWithUsername
@@ -91,6 +89,7 @@ static NSString *const userCellId = @"UserCellId";
         self.textField.placeholder = [Preferences standardPreferences].username;
         [self.signupButton setTitle:@"Sign In!" forState:UIControlStateNormal];
     }
+    [self foldTable];
 }
 
 - (void)didTouchSignUpButton:(UIButton *)sender
@@ -123,9 +122,9 @@ static NSString *const userCellId = @"UserCellId";
     self.tableView.scrollEnabled = YES;
     if (isiPhone5) {
         [UIView animateWithDuration:0.3 animations:^{
-            CGFloat height = (kUnfoldedTableViewFrame_5.size.height < (CGFloat)
+            CGFloat height = (kUnfoldedTableViewFrame_4.size.height < (CGFloat)
                 ([[Preferences standardPreferences].users count]+1)*kTableViewCellHeight?
-                kUnfoldedTableViewFrame_5.size.height:
+                kUnfoldedTableViewFrame_4.size.height:
                 ([[Preferences standardPreferences].users count]+1)*kTableViewCellHeight);
             self.tableView.frame = (CGRect){
                 kUnfoldedTableViewFrame_5.origin,

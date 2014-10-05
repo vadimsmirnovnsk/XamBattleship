@@ -23,4 +23,6 @@
 
 @property (nonatomic, weak) id<BSSignupVCDelegate> delegate;
 
+- (void)prepareControlsWithUsername;
+
 @end

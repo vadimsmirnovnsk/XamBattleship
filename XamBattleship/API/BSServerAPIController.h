@@ -8,6 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString *const kBaseAPIURL = @"ws://178.62.133.63:8008"; // @"ws://echo.websocket.org";//
+
+static NSString *const kEventField = @"event";
+static NSString *const kEventFieldParameterSignIn = @"signin";
+static NSString *const kEventFieldParameterStats = @"stats";
+static NSString *const kEventFieldParameterReady = @"ready";
+
+static NSString *const kDataField = @"data";
+// "event" = "signin"
+static NSString *const kDataFieldParameterName = @"name";
+static NSString *const kDataFieldParameterToken = @"token";
+static NSString *const kDataFieldParameterResult = @"result";
+static NSString *const kDataFieldParameterResultFailed = @"failed";
+static NSString *const kDataFieldParameterResultSignedIn = @"signedin";
+static NSString *const kDataFieldParameterResultSignedUp = @"signedup";
+
+//static NSString *const kMessageField = @"message";
+//static NSString *const kMessageFieldParameterSignedIn = @"successfuly signed in";
+//static NSString *const kMessageFieldParameterSignedUp = @"A new user created for you";
+//static NSString *const kMessageFieldParameterInvalidToken = @"invalid token";
+
+//static NSString *const kUserIDField = @"_id";
+//static NSString *const kUserNameField = @"name";
+//static NSString *const kTokenField = @"token";
+
+
 #pragma mark - BSServerAPIControllerDelegate Protocol
 
 @class BSServerAPIController;

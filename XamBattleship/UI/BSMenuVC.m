@@ -7,22 +7,21 @@
 //
 
 #import "BSMenuVC.h"
-#import "BSBattleVC.h"
-#import "Preferences.h"
-#import "BSServerAPIController.h"
 #import "UIColor+iOS7Colors.h"
+#import "Preferences.h"
+#import "BSBattleVC.h"
+#import "BSBattleWithFriendsVC.h"
+
 
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
-
 
 static NSString *const kUsernamePlaceholder = @"Please enter new Username!";
 
 #pragma mark - BSMenuVC Extension
 
-@interface BSMenuVC () <UITextFieldDelegate, BSBattleVCDelegate, BSServerAPIControllerDelegate>
+@interface BSMenuVC () <BSBattleVCDelegate, BSBattleWithFriendsVCDelegate, BSServerAPIControllerDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField *textField;
-@property (nonatomic, weak) IBOutlet UIButton *signInButton;
+@property (nonatomic, weak) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) BSBattleVC *prepareBattle;
 
 @end
@@ -37,7 +36,6 @@ static NSString *const kUsernamePlaceholder = @"Please enter new Username!";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         [BSServerAPIController sharedController].delegate = self;
     }
     return self;
@@ -47,21 +45,20 @@ static NSString *const kUsernamePlaceholder = @"Please enter new Username!";
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
+    [self loadUserProfile];
     // Do any additional setup after loading the view from its nib.
 }
 
-- (IBAction)didTouchBackButton:(id)sender
+- (void)loadUserProfile
 {
-    if (([self.textField.text isEqualToString:[Preferences standardPreferences].username]) &&
-        (![self.textField.text isEqualToString:@""])) {
-        [self.signInButton setTitle:@"Sign In!" forState:UIControlStateNormal];
-    }
-    else {
-        [self.signInButton setTitle:@"Sign Up!" forState:UIControlStateNormal];
-    }
-    [self.textField resignFirstResponder];
+    self.usernameLabel.text = [Preferences standardPreferences].username;
 }
 
+
+- (IBAction)logout:(id)sender
+{
+    [self.delegate menuVCWillLogout:self];
+}
 
 - (IBAction)prepareGame:(id)sender
 {
@@ -70,30 +67,31 @@ static NSString *const kUsernamePlaceholder = @"Please enter new Username!";
 
     UINavigationController *const navigationController =
         [[UINavigationController alloc] initWithRootViewController:battleVC];
+    [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    [navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
     [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
-#pragma mark UITextFieldDelegate Methods
-- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
+- (IBAction)battleWithFriends:(id)sender
 {
-    [self.signInButton setTitle:@"Sign Up!" forState:UIControlStateNormal];
-    return YES;
+    BSBattleWithFriendsVC *const battleWithFriendsVC = [[BSBattleWithFriendsVC alloc]init];
+    battleWithFriendsVC.delegate = self;
+    
+    UINavigationController *const navigationController =
+        [[UINavigationController alloc]initWithRootViewController:battleWithFriendsVC];
+    [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    [navigationController.navigationBar setBarStyle:UIBarStyleBlackTranslucent];
+    [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
-- (BOOL) textFieldShouldEndEditing:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-
-- (BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-
-#pragma mark BSPrepareBattleVC Methods
+#pragma mark BSPrepareBattleVC Protocol Methods
 - (void) battleVCWillDismissed:(BSBattleVC *)sender
+{
+    [sender dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark BSBattleWithFriendsDelegate Protocol
+- (void) battleWithFriendsVCWillDissmised:(BSBattleWithFriendsVC *)sender
 {
     [sender dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -101,6 +99,7 @@ static NSString *const kUsernamePlaceholder = @"Please enter new Username!";
 #pragma mark BSServerAPIControllerDelagate Protocol Methods
 - (void)connectionDidLost:(BSServerAPIController *)controller
 {
+    [self.delegate connectionDidLost:controller];
 }
 
 @end
